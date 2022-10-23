@@ -13,13 +13,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+import Domain.*;
+import Database.*;
 
 /**
  * JavaFX App
@@ -27,6 +27,13 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private static final String title = "Authenticate";
+
+    public static void setScene(Stage stage) throws Exception {
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -51,13 +58,18 @@ public class App extends Application {
         grid.add(usernameTextField, 1, 1);
         TextField passwordTextField = new TextField();
         grid.add(passwordTextField, 1, 2);
-
-        Button button = new Button("Sign in");
-        button.setId("signIn");
         
         HBox buttonBox = new HBox();
+        
+        Button button = new Button("Sign in");
+        button.setId("signIn");        
+        
+        Button button2 = new Button("Register");
+        button.setId("register");
+
         buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
         buttonBox.getChildren().add(button);
+        buttonBox.getChildren().add(button2);
         grid.add(buttonBox, 1, 4);
         
         Text actionTarget = new Text();
@@ -67,11 +79,30 @@ public class App extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event){
-                actionTarget.setText("User not found. Please register.");
+                try {
+                    if (UserDAO.Authenticate(usernameTextField.getText(), passwordTextField.getText())) {
+                        actionTarget.setText("User found!");
+                    } else {
+                        actionTarget.setText("User not found!");
+                    }                    
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
             } 
         });
 
-        Scene scene = new Scene(grid, 400, 400);
+        button2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent arg0) {
+                try {
+                    new Register().start(stage);
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+            }
+        });
+
+        scene = new Scene(grid, 400, 400);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         stage.setScene(scene);
@@ -90,5 +121,4 @@ public class App extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }
