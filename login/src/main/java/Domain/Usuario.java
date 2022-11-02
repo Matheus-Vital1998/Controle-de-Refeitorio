@@ -1,9 +1,10 @@
 package Domain;
 
-public class User {
+public class Usuario {
     public int id;
     public String name;
     public String ra;
     public String login;
     public String password;
+    public TipoUsuario tipo;
 }
