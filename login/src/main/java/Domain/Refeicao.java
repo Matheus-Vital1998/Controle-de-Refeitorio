@@ -2,9 +2,9 @@ package Domain;
 
 import java.time.LocalTime;
 
-public class RefeicaoPadrao {
+public class Refeicao {
     public Integer id;
-    public String nomeRefeicao;
+    public String nome;
     public LocalTime horarioInicio;
     public LocalTime horarioFim;
     public LocalTime horarioLimiteReserva;
