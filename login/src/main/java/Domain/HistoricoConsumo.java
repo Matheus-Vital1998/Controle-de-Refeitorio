@@ -2,9 +2,9 @@ package Domain;
 
 import java.time.LocalTime;
 
-public class LogEntradaNegada {
+public class HistoricoConsumo {
     public Integer usuarioID;
     public Integer cardapioID;
     public LocalTime horarioChegada;
-    public TipoLogEntradaNegada tipo;
+    public Boolean entrou;
 }

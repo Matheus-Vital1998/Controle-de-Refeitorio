@@ -3,7 +3,7 @@ package Database;
 import java.sql.*;
 import Domain.Usuario;
 
-public class UsuarioDAO implements Dao<Usuario> {
+public class UsuarioDAO implements DAO<Usuario> {
     private ConnectionFactory instance;
 
     public UsuarioDAO() {
@@ -12,10 +12,17 @@ public class UsuarioDAO implements Dao<Usuario> {
 
     //TODO: Create custom Exception
     //TODO: Ensure connection is closed even when exception is thrown
-    public void create(Usuario user) throws Exception {
+    @Override
+    public void create(Usuario usuario) throws Exception {
         String sql = 
-            "INSERT INTO [dbo].[User] ([Name],[RA],[Login],[Password]) VALUES" +
-            "(\'"+user.name+"\','"+user.ra+"\',\'"+user.login+"\',\'"+user.password+"\');";
+            String.format(
+                "INSERT INTO [dbo].[Usuario] ([RA],[Nome],[Login],[Senha],[Tipo]) VALUES ("
+                + "%ra"
+                + ", \'%nome\' ,"
+                + ", \'%login\' ,"
+                + ", \'%senha\' ,"
+                + ", \'%tipo\');"
+                , usuario.ra, usuario.nome, usuario.login, usuario.senha, usuario.tipo);
             
         Connection connection = instance.getConnection();
         Statement statement = connection.createStatement();
@@ -28,27 +35,32 @@ public class UsuarioDAO implements Dao<Usuario> {
     //TODO: Generalize this class
     //TODO: Consider using stored procedures instead
     //TODO: Ensure connection is closed even when exception is thrown
+    @Override
     public Usuario read(Integer id) throws Exception {
         String sql =
-            "SELECT * FROM [dbo].[User] WHERE [ID] = " + id;
+            "SELECT * FROM [dbo].[Usuario] WHERE [ID] = " + id;
 
         Connection connection = instance.getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         connection.close();
-        Usuario user = CreateUserFromResultSet(resultSet);
-        return user;
+        
+        return deserialize(resultSet);
     }
     
     //TODO: Create custom Exception
-    public void update(Usuario user) throws Exception {
+    @Override
+    public void update(Usuario usuario) throws Exception {
         String sql = 
-            "UPDATE [dbo].[User] SET "
-            + "[Name] = " + user.name
-            + ", [Ra] = " + user.ra
-            + ", [Login] = " + user.login
-            + ", [Password] = " + user.password
-            + "WHERE [ID] = " + user.id;
+            String.format(
+                "UPDATE [dbo].[Usuario] SET "
+                + "[Ra] = %ra'"
+                + ", [Nome] = \'%nome\'"
+                + ", [Login] = \'%login\'"
+                + ", [Senha] = \'%senha\'"
+                + ", [Tipo] = \'%tipo\'"
+                + "WHERE [ID] = %id"
+                , usuario.ra, usuario.nome, usuario.login, usuario.senha, usuario.tipo, usuario.id);
 
         Connection connection = instance.getConnection();
         Statement statement = connection.createStatement();
@@ -60,30 +72,18 @@ public class UsuarioDAO implements Dao<Usuario> {
     //TODO: Generalize this class
     //TODO: Consider using stored procedures instead
     //TODO: Ensure connection is closed even when exception is thrown
+    @Override
     public void delete(Integer id) throws Exception {
         String sql = 
-            "DELETE [dbo].[User] WHERE [ID] = "+ id;
+            "DELETE [dbo].[Usuario] WHERE [ID] = " + id;
 
         Connection connection = instance.getConnection();
         Statement statement = connection.createStatement();
         statement.executeQuery(sql);
         connection.close();        
     }
-
-    public Boolean Authenticate(String login, String password) throws Exception {
-        String sql = 
-            "SELECT * FROM [dbo].[User]"
-            + " WHERE [Login] = " + login
-            + " AND [Password] = " + password;
-
-        try (Connection connection = instance.getConnection()) {
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
-            return resultSet.next();
-        }
-    }
     
-    private Usuario CreateUserFromResultSet(ResultSet resultSet) {
+    private Usuario deserialize(ResultSet resultSet) {
         return null;
     }
 }
