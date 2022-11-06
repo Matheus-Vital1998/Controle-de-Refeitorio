@@ -1,6 +1,8 @@
 package Database;
 
 import java.sql.*;
+import java.time.LocalDate;
+
 import Domain.Cardapio;
 
 public class CardapioDAO implements DAO<Cardapio> {
@@ -12,66 +14,126 @@ public class CardapioDAO implements DAO<Cardapio> {
     }
 
     @Override
-    public void create(Cardapio cardapio) throws Exception {
+    public void create(Cardapio cardapio) {
+        Connection connection = null;
+        Statement statement = null;
+
         String sql =
             String.format(
                 "INSERT INTO [dbo].[Cardapio] ([RefeicaoID],[Data],[Descricao]) VALUES ("
-                + "%refeicaoID"
-                + ", \'%data\'"
-                + ", \'%descricao\'')"
+                + "%d"
+                + ", '%s'"
+                + ", '%s')"
                 , cardapio.refeicaoID
                 , cardapio.data
                 , cardapio.descricao);
         
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        statement.execute(sql);
-        connection.close();
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            statement.execute(sql);
+        }
+        catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
     }
 
     @Override
-    public Cardapio read(Integer id) throws Exception {
-        String sql = "SELECT * FROM [dbo].[Cardapio] WHERE [ID] = " + id;
-
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery(sql);
-        connection.close();
+    public Cardapio read(Integer id) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        Cardapio cardapio = null;
         
-        return deserialize(result);
+        String sql = "SELECT * FROM [dbo].[Cardapio] WHERE [ID] = " + id;
+        
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            cardapio = deserialize(result);
+        }
+        catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
+        
+        return cardapio;
     }
 
     @Override
-    public void update(Cardapio cardapio) throws Exception {
+    public void update(Cardapio cardapio) {
+        Connection connection = null;
+        Statement statement = null;
+
         String sql =
             String.format(
                 "UPDATE [dbo].[Cardapio] SET"
-                + "[RefeicaoID] = %refeicaoID"
-                + "[Data] = \'%data\'"
-                + "[Descricao] = \'%descricao\'"
-                + "WHERE [ID] = %id"
+                + "[RefeicaoID] = %d"
+                + ", [Data] = \'%s\'"
+                + ", [Descricao] = \'%s\'"
+                + " WHERE [ID] = %d"
                 , cardapio.refeicaoID
                 , cardapio.data
                 , cardapio.descricao
                 , cardapio.id);
         
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(sql);
-        connection.close();
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            statement.execute(sql);
+        }
+        catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
     }
 
     @Override
-    public void delete(Integer id) throws Exception {
+    public void delete(Integer id) {
+        Connection connection = null;
+        Statement statement = null;
+
         String sql = "DELETE [dbo].[Cardapio] WHERE [ID] = " + id;
         
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        statement.execute(sql);
-        connection.close();        
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            statement.execute(sql);
+        }
+        catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
     }
 
     private Cardapio deserialize(ResultSet result){
-        return null;
+        Cardapio cardapio = new Cardapio();
+        try {
+            while (result.next()) {
+                cardapio.id = result.getInt("ID");
+                cardapio.refeicaoID = result.getInt("RefeicaoID");
+                cardapio.data = LocalDate.parse(result.getString("Data"));
+                cardapio.descricao = result.getString("Descricao");
+            }
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+
+        return cardapio;
     }    
 }

@@ -1,6 +1,8 @@
 package Database;
 
 import java.sql.*;
+
+import Domain.TipoUsuario;
 import Domain.Usuario;
 
 public class UsuarioDAO implements DAO<Usuario> {
@@ -11,23 +13,33 @@ public class UsuarioDAO implements DAO<Usuario> {
     }
 
     //TODO: Create custom Exception
-    //TODO: Ensure connection is closed even when exception is thrown
     @Override
-    public void create(Usuario usuario) throws Exception {
+    public void create(Usuario usuario) {
+        Connection connection = null;
+        Statement statement = null;
+
         String sql = 
             String.format(
                 "INSERT INTO [dbo].[Usuario] ([RA],[Nome],[Login],[Senha],[Tipo]) VALUES ("
-                + "%ra"
-                + ", \'%nome\' ,"
-                + ", \'%login\' ,"
-                + ", \'%senha\' ,"
-                + ", \'%tipo\');"
+                + "\'%s\'"
+                + ", \'%s\'"
+                + ", \'%s\'"
+                + ", \'%s\'"
+                + ", \'%s\');"
                 , usuario.ra, usuario.nome, usuario.login, usuario.senha, usuario.tipo);
-            
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        statement.execute(sql);
-        connection.close();
+        
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            statement.execute(sql);
+        }
+        catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
     }
 
     //TODO: Create custom Exception
@@ -36,36 +48,62 @@ public class UsuarioDAO implements DAO<Usuario> {
     //TODO: Consider using stored procedures instead
     //TODO: Ensure connection is closed even when exception is thrown
     @Override
-    public Usuario read(Integer id) throws Exception {
+    public Usuario read(Integer id) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        Usuario usuario = null;
+
         String sql =
             "SELECT * FROM [dbo].[Usuario] WHERE [ID] = " + id;
 
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-        connection.close();
-        
-        return deserialize(resultSet);
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            usuario = deserialize(result);
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { result.close(); } catch (Exception exception) {/* Ignored */}
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
+
+        return usuario;
     }
     
     //TODO: Create custom Exception
     @Override
-    public void update(Usuario usuario) throws Exception {
+    public void update(Usuario usuario) {
+        Connection connection = null;
+        Statement statement = null;
+
         String sql = 
             String.format(
                 "UPDATE [dbo].[Usuario] SET "
-                + "[Ra] = %ra'"
-                + ", [Nome] = \'%nome\'"
-                + ", [Login] = \'%login\'"
-                + ", [Senha] = \'%senha\'"
-                + ", [Tipo] = \'%tipo\'"
-                + "WHERE [ID] = %id"
+                + "[Ra] = \'%s\'"
+                + ", [Nome] = \'%s\'"
+                + ", [Login] = \'%s\'"
+                + ", [Senha] = \'%s\'"
+                + ", [Tipo] = \'%s\'"
+                + "WHERE [ID] = %d"
                 , usuario.ra, usuario.nome, usuario.login, usuario.senha, usuario.tipo, usuario.id);
-
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        statement.executeQuery(sql);
-        connection.close();   
+        
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+        }
+        catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
     }
 
     //TODO: Create custom Exception
@@ -73,17 +111,43 @@ public class UsuarioDAO implements DAO<Usuario> {
     //TODO: Consider using stored procedures instead
     //TODO: Ensure connection is closed even when exception is thrown
     @Override
-    public void delete(Integer id) throws Exception {
+    public void delete(Integer id) {
+        Connection connection = null;
+        Statement statement = null;
+
         String sql = 
             "DELETE [dbo].[Usuario] WHERE [ID] = " + id;
 
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        statement.executeQuery(sql);
-        connection.close();        
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            statement.execute(sql);
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
     }
     
-    private Usuario deserialize(ResultSet resultSet) {
-        return null;
+    private Usuario deserialize(ResultSet result) {
+        Usuario usuario = new Usuario();
+        try {
+            while (result.next()) {
+                usuario.id = result.getInt("ID");
+                usuario.nome = result.getString("Nome");
+                usuario.ra = result.getString("Ra");
+                usuario.login = result.getString("Login");
+                usuario.senha = result.getString("Senha");
+                usuario.tipo = TipoUsuario.valueOf(result.getString("Tipo"));
+            }
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+
+        return usuario;
     }
 }

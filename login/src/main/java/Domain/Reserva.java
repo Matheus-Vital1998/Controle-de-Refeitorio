@@ -1,9 +1,10 @@
 package Domain;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class Reserva {
+    public Integer id;
     public Integer usuarioID;
     public Integer cardapioID;
-    public LocalTime horario;
+    public LocalDateTime horario;
 }
