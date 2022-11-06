@@ -6,5 +6,6 @@ public class HistoricoConsumo {
     public Integer usuarioID;
     public Integer cardapioID;
     public LocalTime horarioChegada;
-    public Boolean entrou;
+    public Boolean entradaAutorizada;
+    public String motivo;
 }

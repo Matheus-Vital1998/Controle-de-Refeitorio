@@ -1,6 +1,8 @@
 package Database;
 
 import java.sql.*;
+import java.time.LocalTime;
+
 import Domain.Refeicao;
 
 public class RefeicaoDAO implements DAO<Refeicao>{
@@ -11,73 +13,135 @@ public class RefeicaoDAO implements DAO<Refeicao>{
     }
 
     @Override
-    public void create(Refeicao refeicao) throws Exception {
+    public void create(Refeicao refeicao) {
+        Connection connection = null;
+        Statement statement = null;
+
         String sql = 
             String.format(
-                "INSERT INTO [dbo].[Refeicao] ([RA],[Nome],[Login],[Senha],[Tipo]) VALUES ("
-                + "\'%nome\'"
-                + ", \'%horarioInicio\' ,"
-                + ", \'%horarioFim\' ,"
-                + ", \'%horarioLimiteReserva\');"
+                "INSERT INTO [dbo].[Refeicao] ([Nome],[HorarioInicio],[HorarioFim],[HorarioLimiteReserva]) VALUES ("
+                + "\'%s\'"
+                + ", \'%s\'"
+                + ", \'%s\'"
+                + ", \'%s\');"
                 , refeicao.nome
                 , refeicao.horarioInicio
                 , refeicao.horarioFim
                 , refeicao.horarioLimiteReserva);
-            
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        statement.execute(sql);
-        connection.close();
+        
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            statement.execute(sql);
+        }
+        catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
     }
 
     @Override
-    public Refeicao read(Integer id) throws Exception {
+    public Refeicao read(Integer id) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        Refeicao refeicao = null;
+
         String sql =
             "SELECT * FROM [dbo].[Refeicao] WHERE [ID] = " + id;
-            
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery(sql);
-        connection.close();
 
-        return deserialize(result);
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            refeicao = deserialize(result);
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { result.close(); } catch (Exception exception) {/* Ignored */}
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
+
+        return refeicao;
     }
 
     @Override
-    public void update(Refeicao refeicao) throws Exception {
+    public void update(Refeicao refeicao) {
+        Connection connection = null;
+        Statement statement = null;
+
         String sql = 
             String.format(
                 "UPDATE [dbo].[Refeicao] SET"
-                + "[Nome] = \'%Nome\'"
-                + ", [HorarioInicio] = \'%horarioInicio\' ,"
-                + ", [HorarioFim] = \'%horarioFim\' ,"
-                + ", [HorarioLimiteReserva] = \'%horarioLimiteReserva\'"
-                + "WHERE [ID] = %id"
+                + "[Nome] = \'%s\'"
+                + ", [HorarioInicio] = \'%s\'"
+                + ", [HorarioFim] = \'%s\'"
+                + ", [HorarioLimiteReserva] = \'%s\'"
+                + "WHERE [ID] = %d"
                 , refeicao.nome
                 , refeicao.horarioInicio
                 , refeicao.horarioFim
                 , refeicao.horarioLimiteReserva
                 , refeicao.id);
-            
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        statement.execute(sql);
-        connection.close();
+
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+        }
+        catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
         
     }
 
     @Override
-    public void delete(Integer id) throws Exception {
+    public void delete(Integer id) {
+        Connection connection = null;
+        Statement statement = null;
+
         String sql = 
             "DELETE [dbo].[Refeicao] WHERE [ID] = " + id;
 
-        Connection connection = instance.getConnection();
-        Statement statement = connection.createStatement();
-        statement.executeQuery(sql);
-        connection.close();      
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            statement.execute(sql);
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        } 
     }    
 
     private Refeicao deserialize(ResultSet result) {
-        return null;
+        Refeicao refeicao = new Refeicao();
+        try {
+            while (result.next()) {
+                refeicao.id = result.getInt("ID");
+                refeicao.nome = result.getString("Nome");
+                refeicao.horarioInicio = LocalTime.parse(result.getString("HorarioInicio"));
+                refeicao.horarioFim = LocalTime.parse(result.getString("HorarioFim"));
+                refeicao.horarioLimiteReserva = LocalTime.parse(result.getString("HorarioLimiteReserva"));
+            }
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+
+        return refeicao;
     }
 }
