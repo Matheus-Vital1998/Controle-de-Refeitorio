@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane id="AnchorPane" prefHeight="501.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.cefsa.imeal_crud.ADM_CRUD_CardapioController">
+   <children>
+      <SplitPane dividerPositions="0.12424849699398798" layoutX="-7.0" orientation="VERTICAL" prefHeight="501.0" prefWidth="795.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="59.0" prefWidth="796.0" style="-fx-background-color: rgb(255, 226, 100);">
+               <children>
+                  <Button fx:id="btnVoltar" layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onAction="#OnClick_btnVoltar" text="Voltar" />
+                  <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="73.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../imgs/iMeal_Logo_Oficial_2.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="434.0" prefWidth="778.0" style="-fx-background-color: rgb(235,235,239);">
+               <children>
+                  <Label layoutX="355.0" layoutY="26.0" text="CRUD Cardapio" />
+                  <TextArea fx:id="txtDescricao" layoutX="26.0" layoutY="76.0" prefHeight="320.0" prefWidth="518.0" />
+                  <Label layoutX="26.0" layoutY="59.0" text="Descrição:" />
+                  <Pane layoutX="562.0" layoutY="76.0" prefHeight="320.0" prefWidth="216.0" style="-fx-background-color: rgb(222,222,230);">
+                     <children>
+                        <Button fx:id="btnConfirmar" layoutX="18.0" layoutY="170.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="188.0" text="Confirmar" />
+                        <Button fx:id="btnCancelar" layoutX="60.0" layoutY="273.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Cancelar" />
+                        <Label layoutX="42.0" layoutY="36.0" text="Confirmar ida à refeição?" />
+                     </children>
+                  </Pane>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

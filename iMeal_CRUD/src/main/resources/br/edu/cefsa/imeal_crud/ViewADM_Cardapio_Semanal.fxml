@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="501.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.cefsa.imeal_crud.ADM_Cardapio_SemanalController">
+   <children>
+      <SplitPane dividerPositions="0.12424849699398798" orientation="VERTICAL" prefHeight="501.0" prefWidth="788.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="59.0" prefWidth="796.0" style="-fx-background-color: rgb(255, 226, 100);">
+               <children>
+                  <Button fx:id="btnVoltar" layoutX="14.0" layoutY="16.0" mnemonicParsing="false" onAction="#OnClick_btnVoltar" text="Voltar" />
+                  <ImageView fitHeight="150.0" fitWidth="50.0" layoutX="73.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../imgs/iMeal_Logo_Oficial_2.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="434.0" prefWidth="778.0" style="-fx-background-color: rgb(235,235,239);">
+               <children>
+                  <Label layoutX="347.0" layoutY="34.0" text="Cardapio semanal" />
+                  <Label fx:id="lblDiaSegunda" layoutX="119.0" layoutY="104.0" text="XX/XX/XXXX" />
+                  <Button layoutX="98.0" layoutY="165.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Café-da-manhã" />
+                  <Button layoutX="98.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Almoço" />
+                  <Button layoutX="98.0" layoutY="235.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Lanche" />
+                  <Button layoutX="98.0" layoutY="271.0" mnemonicParsing="false" onAction="#OnClick_Seg_Janta" prefHeight="25.0" prefWidth="108.0" text="Janta" />
+                  <Button layoutX="98.0" layoutY="306.0" mnemonicParsing="false" onAction="#OnClick_Seg_Lanche_Reforcado" text="Lanche reforçado" />
+                  <Label layoutX="115.0" layoutY="132.0" text="Segunda-feira" />
+                  <Label fx:id="lblDiaTerca" layoutX="239.0" layoutY="104.0" text="XX/XX/XXXX" />
+                  <Button layoutX="218.0" layoutY="165.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Café-da-manhã" />
+                  <Button layoutX="218.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Almoço" />
+                  <Button layoutX="218.0" layoutY="235.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Lanche" />
+                  <Button layoutX="218.0" layoutY="271.0" mnemonicParsing="false" onAction="#OnClick_Ter_Janta" prefHeight="25.0" prefWidth="108.0" text="Janta" />
+                  <Button layoutX="218.0" layoutY="306.0" mnemonicParsing="false" onAction="#OnClick_Ter_Lanche_Reforcado" text="Lanche reforçado" />
+                  <Label layoutX="244.0" layoutY="132.0" text="Terça-feira" />
+                  <Label fx:id="lblDiaQuarta" layoutX="361.0" layoutY="104.0" text="XX/XX/XXXX" />
+                  <Button layoutX="339.0" layoutY="165.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Café-da-manhã" />
+                  <Button layoutX="339.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Almoço" />
+                  <Button layoutX="339.0" layoutY="235.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Lanche" />
+                  <Button layoutX="339.0" layoutY="271.0" mnemonicParsing="false" onAction="#OnClick_Qua_Janta" prefHeight="25.0" prefWidth="108.0" text="Janta" />
+                  <Button layoutX="339.0" layoutY="306.0" mnemonicParsing="false" onAction="#OnClick_Qua_Lanche_Reforcado" text="Lanche reforçado" />
+                  <Label layoutX="362.0" layoutY="132.0" text="Quarta-feira" />
+                  <Label fx:id="lblDiaSexta" layoutX="601.0" layoutY="104.0" text="XX/XX/XXXX" />
+                  <Button layoutX="580.0" layoutY="165.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Café-da-manhã" />
+                  <Button layoutX="580.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Almoço" />
+                  <Button layoutX="580.0" layoutY="235.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Lanche" />
+                  <Button layoutX="580.0" layoutY="271.0" mnemonicParsing="false" onAction="#OnClick_Sex_Janta" prefHeight="25.0" prefWidth="108.0" text="Janta" />
+                  <Button layoutX="580.0" layoutY="306.0" mnemonicParsing="false" onAction="#OnClick_Sex_Lanche_Reforcado" text="Lanche reforçado" />
+                  <Label layoutX="606.0" layoutY="132.0" text="Sexta-feira" />
+                  <Label fx:id="lblDiaQuinta" layoutX="480.0" layoutY="104.0" text="XX/XX/XXXX" />
+                  <Button layoutX="459.0" layoutY="165.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Café-da-manhã" />
+                  <Button layoutX="459.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Almoço" />
+                  <Button layoutX="459.0" layoutY="235.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Lanche" />
+                  <Button layoutX="459.0" layoutY="271.0" mnemonicParsing="false" onAction="#OnClick_Qui_Janta" prefHeight="25.0" prefWidth="108.0" text="Janta" />
+                  <Button layoutX="459.0" layoutY="306.0" mnemonicParsing="false" onAction="#OnClick_Qui_Lanche_Reforcado" text="Lanche reforçado" />
+                  <Label layoutX="481.0" layoutY="132.0" text="Quinta-feira" />
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
