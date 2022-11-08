@@ -21,8 +21,8 @@ public class App extends Application {
         scene = new Scene(loadFXML("ViewLogin"), 640, 480);
         stage.getIcons().add(new Image("/imgs/iMeal_Logo_Oficial_2.png"));
         stage.setTitle("iMeal");
-        stage.setWidth(782);
-        stage.setHeight(530);
+        stage.setWidth(800);
+        stage.setHeight(540);
         stage.setScene(scene);
         stage.show();
     }

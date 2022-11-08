@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -20,11 +22,21 @@ public class ADM_CRUD_CardapioController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    @FXML
+    private Label lblTitulo;
+    @FXML
+    private Button btnExcluir;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //Se já possui descrição - edição; se não - criação
+        if (true){
+            lblTitulo.setText("Editar cardápio");
+        }else{
+            lblTitulo.setText("Criar cardápio");
+            btnExcluir.setVisible(false);
+        }
     }    
-    
     
     @FXML
     private void OnClick_btnVoltar() throws IOException {

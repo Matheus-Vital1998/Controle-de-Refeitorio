@@ -4,12 +4,12 @@
  */
 package br.edu.cefsa.imeal_crud;
 
-import br.edu.cefsa.imeal_crud.App;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -26,8 +26,14 @@ public class LoginController implements Initializable {
         // TODO
     }    
     
+    @FXML private TextField txtLogin;
+    @FXML private TextField txtSenha;
+    
     @FXML
     private void OnClick_btnEntrar() throws IOException {
+        //Validar Login e Senha
+        
+        //Verificar se é usuário ADMIN ou ALUNO        
         if (true){
             App.setRoot("ViewADM_Inicial");
         } else{
