@@ -23,12 +23,13 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="434.0" prefWidth="778.0" style="-fx-background-color: rgb(235,235,239);">
                <children>
-                  <Button fx:id="btnEntrar" layoutX="373.0" layoutY="300.0" mnemonicParsing="false" onAction="#OnClick_btnEntrar" text="Entrar" />
+                  <Button fx:id="btnEntrar" layoutX="373.0" layoutY="360.0" mnemonicParsing="false" onAction="#OnClick_btnEntrar" text="Entrar" />
                   <TextField fx:id="txtLogin" layoutX="146.0" layoutY="164.0" prefHeight="25.0" prefWidth="558.0" />
                   <Label layoutX="109.0" layoutY="168.0" text="Login" />
                   <Label layoutX="108.0" layoutY="229.0" text="Senha" />
                   <TextField fx:id="txtSenha" layoutX="151.0" layoutY="225.0" prefHeight="25.0" prefWidth="558.0" />
                   <Label layoutX="382.0" layoutY="72.0" text="Login" />
+                  <Label fx:id="lblValidacao" layoutX="110.0" layoutY="287.0" textFill="RED" />
                </children></AnchorPane>
         </items>
       </SplitPane>

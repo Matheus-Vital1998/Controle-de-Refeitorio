@@ -70,6 +70,32 @@ public class RefeicaoDAO implements DAO<Refeicao>{
 
         return refeicao;
     }
+    public Refeicao read(String nome_refeicao) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        Refeicao refeicao = null;
+
+        String sql =
+            "SELECT * FROM [dbo].[Refeicao] WHERE [Nome] = " + nome_refeicao;
+
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            refeicao = deserialize(result);
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { result.close(); } catch (Exception exception) {/* Ignored */}
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
+
+        return refeicao;
+    }
 
     @Override
     public void update(Refeicao refeicao) {
