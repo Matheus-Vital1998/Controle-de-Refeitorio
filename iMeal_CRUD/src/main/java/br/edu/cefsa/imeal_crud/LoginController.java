@@ -42,13 +42,7 @@ public class LoginController implements Initializable {
         
         //Validar Login e Senha
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        //usuarioAtual = usuarioDAO.authenticate(txtLogin.getText(), txtSenha.getText());
-        usuarioAtual.id = 1;
-        usuarioAtual.login = "adm@adm";
-        usuarioAtual.senha = "admSenha";
-        usuarioAtual.nome = "ade emi";
-        usuarioAtual.ra = "081200024";
-        usuarioAtual.tipo = TipoUsuario.ADMIN;
+        usuarioAtual = usuarioDAO.authenticate(txtLogin.getText(), txtSenha.getText());
                                 
         if(usuarioAtual == null){
             txtLogin.setText("");

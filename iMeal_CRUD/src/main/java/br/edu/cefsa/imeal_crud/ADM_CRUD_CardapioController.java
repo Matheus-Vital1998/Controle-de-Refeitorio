@@ -44,9 +44,8 @@ public class ADM_CRUD_CardapioController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         cardapioEscolhido = new Cardapio();
-//        cardapioEscolhido = cardapioDAO.read(ADM_Cardapio_SemanalController.dataEscolhida,
-//                ADM_Cardapio_SemanalController.refeicaoEscolhida.id);
-        cardapioEscolhido = DESCARTAR();
+        cardapioEscolhido = cardapioDAO.read(ADM_Cardapio_SemanalController.dataEscolhida,
+                ADM_Cardapio_SemanalController.refeicaoEscolhida.id);
 
         //Se descrição vazia - criação; se não - edição
         String tituloTela = "";
@@ -140,15 +139,5 @@ public class ADM_CRUD_CardapioController implements Initializable {
         } else {
             return 1;
         }
-    }
-
-    private Cardapio DESCARTAR() {
-        Cardapio cardapioAux = new Cardapio();
-        cardapioAux.data = ADM_Cardapio_SemanalController.dataEscolhida;
-        cardapioAux.id = 1;
-        cardapioAux.refeicaoID = 1;
-        cardapioAux.descricao = "adwadaw";
-
-        return cardapioAux;
     }
 }

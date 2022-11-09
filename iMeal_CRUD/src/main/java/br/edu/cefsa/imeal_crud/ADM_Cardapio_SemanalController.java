@@ -115,11 +115,9 @@ public class ADM_Cardapio_SemanalController implements Initializable {
         try {
             //Refeição
             if (nome_refeicao == "Janta") {
-//                refeicaoEscolhida = refeicaoDAO.read("Janta");
-                refeicaoEscolhida = DESCARTAR("Janta");
+                refeicaoEscolhida = refeicaoDAO.read("Janta");
             } else if (nome_refeicao == "Lanche reforçado") {
-//                refeicaoEscolhida = refeicaoDAO.read("Lanche reforçado");
-                refeicaoEscolhida = DESCARTAR("Lanche reforçado");
+                refeicaoEscolhida = refeicaoDAO.read("Lanche reforçado");
             } else {
                 MsgErro("Ocorreu algo de errado. Tente reiniciar o programa.");
             }
@@ -207,18 +205,5 @@ public class ADM_Cardapio_SemanalController implements Initializable {
     private void OnClick_Sex_Lanche_Reforcado() throws IOException {
         RefeicaoEscolhida("Lanche reforçado", "Sexta");
         App.setRoot("ViewADM_CRUD_Cardapio");
-    }
-    
-    
-    private Refeicao DESCARTAR(String nome){
-        Refeicao refeicaoAux = new Refeicao();
-        refeicaoAux.id = 1;
-        refeicaoAux.nome = nome;
-        refeicaoAux.horarioInicio = LocalTime.of(18, 0);
-        refeicaoAux.horarioFim = LocalTime.of(19, 05);
-        refeicaoAux.horarioLimiteReserva = LocalTime.of(17, 00);
-        
-        
-        return refeicaoAux;
     }
 }
