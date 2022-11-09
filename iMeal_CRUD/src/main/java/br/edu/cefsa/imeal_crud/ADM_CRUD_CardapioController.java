@@ -29,13 +29,20 @@ public class ADM_CRUD_CardapioController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        String tituloTela = "";
+        
         //Se já possui descrição - edição; se não - criação
         if (true){
-            lblTitulo.setText("Editar cardápio");
+            tituloTela = "Editar cardápio";
         }else{
-            lblTitulo.setText("Criar cardápio");
+            tituloTela = "Criar cardápio";
             btnExcluir.setVisible(false);
         }
+        
+        tituloTela += ": " + ADM_Cardapio_SemanalController.refeicaoEscolhida + " de " + ADM_Cardapio_SemanalController.diaDaSemanaEscolhido + " - " + ADM_Cardapio_SemanalController.dataEscolhida;
+        
+        lblTitulo.setText(tituloTela);
     }    
     
     @FXML
