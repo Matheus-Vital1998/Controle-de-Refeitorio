@@ -67,6 +67,31 @@ public class CardapioDAO implements DAO<Cardapio> {
         
         return cardapio;
     }
+    public Cardapio read(LocalDate data, Integer idRefeicao) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        Cardapio cardapio = null;
+        
+        String sql = "SELECT * FROM [dbo].[Cardapio] WHERE [RefeicaoID] = " 
+                + idRefeicao + " And [Data] = " + data;
+        
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            cardapio = deserialize(result);
+        }
+        catch (Exception exception){
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
+        
+        return cardapio;
+    }
 
     @Override
     public void update(Cardapio cardapio) {
@@ -136,4 +161,6 @@ public class CardapioDAO implements DAO<Cardapio> {
 
         return cardapio;
     }    
+    
+    
 }

@@ -150,4 +150,32 @@ public class UsuarioDAO implements DAO<Usuario> {
 
         return usuario;
     }
+    
+    
+    public Usuario authenticate(String login, String senha) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        Usuario usuario = null;
+
+        String sql =
+            "SELECT * FROM [dbo].[Usuario] WHERE [Login] = " + login + " And [Senha] = " + senha;
+
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            usuario = deserialize(result);
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { result.close(); } catch (Exception exception) {/* Ignored */}
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
+
+        return usuario;
+    }
 }
