@@ -20,7 +20,7 @@ public class CardapioDAO implements DAO<Cardapio> {
 
         String sql =
             String.format(
-                "INSERT INTO [dbo].[Cardapio] ([RefeicaoID],[Data],[Descricao]) VALUES ("
+                "INSERT INTO CARDAPIO VALUES ("
                 + "%d"
                 + ", '%s'"
                 + ", '%s')"
@@ -49,7 +49,7 @@ public class CardapioDAO implements DAO<Cardapio> {
         ResultSet result = null;
         Cardapio cardapio = null;
         
-        String sql = "SELECT * FROM [dbo].[Cardapio] WHERE [ID] = " + id;
+        String sql = "SELECT * FROM CARDAPIO WHERE ID = " + id;
         
         try {
             connection = instance.getConnection();
@@ -73,8 +73,8 @@ public class CardapioDAO implements DAO<Cardapio> {
         ResultSet result = null;
         Cardapio cardapio = null;
         
-        String sql = "SELECT * FROM [dbo].[Cardapio] WHERE [RefeicaoID] = " 
-                + idRefeicao + " And [Data] = " + data;
+        String sql = "SELECT * FROM CARDAPIO WHERE REFEICAO_ID = " 
+                + idRefeicao + " And DATA = " + data;
         
         try {
             connection = instance.getConnection();
@@ -100,11 +100,11 @@ public class CardapioDAO implements DAO<Cardapio> {
 
         String sql =
             String.format(
-                "UPDATE [dbo].[Cardapio] SET"
-                + "[RefeicaoID] = %d"
-                + ", [Data] = \'%s\'"
-                + ", [Descricao] = \'%s\'"
-                + " WHERE [ID] = %d"
+                "UPDATE CARDAPIO SET"
+                + "REFEICAO_ID = %d"
+                + ", DATA = \'%s\'"
+                + ", DESCRICAO = \'%s\'"
+                + " WHERE ID = %d"
                 , cardapio.refeicaoID
                 , cardapio.data
                 , cardapio.descricao
@@ -129,7 +129,7 @@ public class CardapioDAO implements DAO<Cardapio> {
         Connection connection = null;
         Statement statement = null;
 
-        String sql = "DELETE [dbo].[Cardapio] WHERE [ID] = " + id;
+        String sql = "DELETE CARDAPIO WHERE ID = " + id;
         
         try {
             connection = instance.getConnection();
@@ -150,9 +150,9 @@ public class CardapioDAO implements DAO<Cardapio> {
         try {
             while (result.next()) {
                 cardapio.id = result.getInt("ID");
-                cardapio.refeicaoID = result.getInt("RefeicaoID");
-                cardapio.data = LocalDate.parse(result.getString("Data"));
-                cardapio.descricao = result.getString("Descricao");
+                cardapio.refeicaoID = result.getInt("REFEICAO_ID");
+                cardapio.data = LocalDate.parse(result.getString("DATA"));
+                cardapio.descricao = result.getString("DESCRICAO");
             }
         }
         catch (Exception exception) {

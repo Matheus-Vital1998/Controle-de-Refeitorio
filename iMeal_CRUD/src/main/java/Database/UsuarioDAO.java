@@ -20,7 +20,7 @@ public class UsuarioDAO implements DAO<Usuario> {
 
         String sql = 
             String.format(
-                "INSERT INTO [dbo].[Usuario] ([RA],[Nome],[Login],[Senha],[Tipo]) VALUES ("
+                "INSERT INTO USUARIO VALUES ("
                 + "\'%s\'"
                 + ", \'%s\'"
                 + ", \'%s\'"
@@ -55,7 +55,7 @@ public class UsuarioDAO implements DAO<Usuario> {
         Usuario usuario = null;
 
         String sql =
-            "SELECT * FROM [dbo].[Usuario] WHERE [ID] = " + id;
+            "SELECT * FROM USUARIO WHERE ID = " + id;
 
         try {
             connection = instance.getConnection();
@@ -83,13 +83,13 @@ public class UsuarioDAO implements DAO<Usuario> {
 
         String sql = 
             String.format(
-                "UPDATE [dbo].[Usuario] SET "
-                + "[Ra] = \'%s\'"
-                + ", [Nome] = \'%s\'"
-                + ", [Login] = \'%s\'"
-                + ", [Senha] = \'%s\'"
-                + ", [Tipo] = \'%s\'"
-                + "WHERE [ID] = %d"
+                "UPDATE USUARIO SET "
+                + "RA = \'%s\'"
+                + ", NOME = \'%s\'"
+                + ", LOGIN = \'%s\'"
+                + ", SENHA = \'%s\'"
+                + ", TIPO = \'%s\'"
+                + "WHERE ID = %d"
                 , usuario.ra, usuario.nome, usuario.login, usuario.senha, usuario.tipo, usuario.id);
         
         try {
@@ -116,7 +116,7 @@ public class UsuarioDAO implements DAO<Usuario> {
         Statement statement = null;
 
         String sql = 
-            "DELETE [dbo].[Usuario] WHERE [ID] = " + id;
+            "DELETE USUARIO WHERE ID = " + id;
 
         try {
             connection = instance.getConnection();
@@ -137,11 +137,11 @@ public class UsuarioDAO implements DAO<Usuario> {
         try {
             while (result.next()) {
                 usuario.id = result.getInt("ID");
-                usuario.nome = result.getString("Nome");
-                usuario.ra = result.getString("Ra");
-                usuario.login = result.getString("Login");
-                usuario.senha = result.getString("Senha");
-                usuario.tipo = TipoUsuario.valueOf(result.getString("Tipo"));
+                usuario.nome = result.getString("NOME");
+                usuario.ra = result.getString("RA");
+                usuario.login = result.getString("LOGIN");
+                usuario.senha = result.getString("SENHA");
+                usuario.tipo = TipoUsuario.valueOf(result.getString("TIPO"));
             }
         }
         catch (Exception exception) {
@@ -159,7 +159,7 @@ public class UsuarioDAO implements DAO<Usuario> {
         Usuario usuario = null;
 
         String sql =
-            "SELECT * FROM [dbo].[Usuario] WHERE [Login] = " + login + " And [Senha] = " + senha;
+            "SELECT * FROM USUARIO WHERE LOGIN = " + login + " And SENHA = " + senha;
 
         try {
             connection = instance.getConnection();

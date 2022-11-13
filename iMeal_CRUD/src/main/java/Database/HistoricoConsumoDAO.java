@@ -14,12 +14,12 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
     public void create(HistoricoConsumo historicoConsumo) throws Exception {
         String sql = 
             String.format(
-                "INSERT INTO [dbo].[HistoricoConsumo] ([UsuarioID],[CardapioID],[HorarioChegada],[EntradaAutorizada],[Motivo]) VALUES ("
-                + "%usuarioID"
-                + ", %cardapioID"
-                + ", \'%horarioChegada\'"
-                + ", %entradaAutorizada"
-                + ", \'%motivo\'"
+                "INSERT INTO HISTORICO_CONSUMO VALUES ("
+                + "%d"
+                + ", %d"
+                + ", '%s'"
+                + ", %d"
+                + ", '%s'"
                 , historicoConsumo.usuarioID
                 , historicoConsumo.cardapioID
                 , historicoConsumo.horarioChegada
@@ -35,7 +35,7 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
     @Override
     public HistoricoConsumo read(Integer id) throws Exception {
         String sql = 
-            "SELECT * FROM [dbo].[HistoricoConsumo] WHERE [ID] = " + id;
+            "SELECT * FROM HISTORICO_CONSUMO WHERE ID = " + id;
 
         Connection connection = connectionFactory.getConnection();
         Statement statement = connection.createStatement();
@@ -49,12 +49,12 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
     public void update(HistoricoConsumo historicoConsumo) throws Exception {
         String sql = 
             String.format(
-                "UPDATE [dbo].[HistoricoConsumo] SET"
-                + "[UsuarioID] = %usuarioID"
-                + ", [CardapioID] = %cardapioID"
-                + ", [HorarioChegada] = \'%horarioChegada\'"
-                + ", [EntradaAutorizada] = %entradaAutorizada"
-                + ", [Motivo] = \'%motivo\'"
+                "UPDATE HISTORICO_CONSUMO SET"
+                + "USUARIO_ID = %d"
+                + ", CARDAPIO_ID = %d"
+                + ", HORARIO_CHEGADA = '%s'"
+                + ", ENTRADA_AUTORIZADA = %d"
+                + ", MOTIVO = '%s'"
                 , historicoConsumo.usuarioID
                 , historicoConsumo.cardapioID
                 , historicoConsumo.horarioChegada
@@ -69,7 +69,7 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
 
     @Override
     public void delete(Integer id) throws Exception {
-        String sql = "DELETE [dbo].[HistoricoConsumo] WHERE [ID] = " + id;
+        String sql = "DELETE HISTORICO_CONSUMO WHERE ID = " + id;
 
         Connection connection = connectionFactory.getConnection();
         Statement statement = connection.createStatement();

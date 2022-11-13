@@ -20,7 +20,7 @@ public class ReservaDAO implements DAO<Reserva> {
 
         String sql = 
             String.format(
-                "INSERT INTO [dbo].[Reserva] ([UsuarioID],[CardapioID],[HorarioReserva]) VALUES ("
+                "INSERT INTO RESERVA VALUES ("
                 + "%d"
                 + ", %d"
                 + ", '%s')"
@@ -50,7 +50,7 @@ public class ReservaDAO implements DAO<Reserva> {
         Reserva reserva = null;
 
         String sql = 
-            "SELECT * FROM [dbo].[Reserva] WHERE [ID] = " + id;
+            "SELECT * FROM RESERVA WHERE ID = " + id;
 
         try {
             connection = instance.getConnection();
@@ -77,11 +77,11 @@ public class ReservaDAO implements DAO<Reserva> {
 
         String sql = 
             String.format(
-                "UPDATE [dbo].[Reserva] SET"
-                + " [UsuarioID] = %d"
-                + ", [CardapioID] = %d"
-                + ", [HorarioReserva] = '%s'"
-                + " WHERE [ID] = %d"
+                "UPDATE RESERVA SET"
+                + " USUARIO_ID = %d"
+                + ", CARDAPIO_ID = %d"
+                + ", HORARIO_RESERVA = '%s'"
+                + " WHERE ID = %d"
                 , reserva.usuarioID
                 , reserva.cardapioID
                 , reserva.horario.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
@@ -106,7 +106,7 @@ public class ReservaDAO implements DAO<Reserva> {
         Connection connection = null;
         Statement statement = null;
 
-        String sql = "DELETE [dbo].[Reserva] WHERE [ID] = " + id;
+        String sql = "DELETE RESERVA WHERE ID = " + id;
         
         try {
             connection = instance.getConnection();
@@ -127,9 +127,9 @@ public class ReservaDAO implements DAO<Reserva> {
         try {
             while (result.next()) {
                 reserva.id = result.getInt("ID");
-                reserva.usuarioID = result.getInt("UsuarioID");
-                reserva.cardapioID = result.getInt("CardapioID");
-                reserva.horario = LocalDateTime.parse(result.getString("HorarioReserva"), DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.S"));
+                reserva.usuarioID = result.getInt("USUARIO_ID");
+                reserva.cardapioID = result.getInt("CARDAPIO_ID");
+                reserva.horario = LocalDateTime.parse(result.getString("HORARIO_RESERVA"), DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.S"));
             }
         }
         catch (Exception exception) {

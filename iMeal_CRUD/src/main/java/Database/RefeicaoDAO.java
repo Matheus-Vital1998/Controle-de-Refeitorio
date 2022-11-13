@@ -19,7 +19,7 @@ public class RefeicaoDAO implements DAO<Refeicao>{
 
         String sql = 
             String.format(
-                "INSERT INTO [dbo].[Refeicao] ([Nome],[HorarioInicio],[HorarioFim],[HorarioLimiteReserva]) VALUES ("
+                "INSERT INTO REFEICAO VALUES ("
                 + "\'%s\'"
                 + ", \'%s\'"
                 + ", \'%s\'"
@@ -51,7 +51,7 @@ public class RefeicaoDAO implements DAO<Refeicao>{
         Refeicao refeicao = null;
 
         String sql =
-            "SELECT * FROM [dbo].[Refeicao] WHERE [ID] = " + id;
+            "SELECT * FROM REFEICAO WHERE ID = " + id;
 
         try {
             connection = instance.getConnection();
@@ -77,7 +77,7 @@ public class RefeicaoDAO implements DAO<Refeicao>{
         Refeicao refeicao = null;
 
         String sql =
-            "SELECT * FROM [dbo].[Refeicao] WHERE [Nome] = " + nome_refeicao;
+            "SELECT * FROM REFEICAO WHERE NOME = " + nome_refeicao;
 
         try {
             connection = instance.getConnection();
@@ -104,12 +104,12 @@ public class RefeicaoDAO implements DAO<Refeicao>{
 
         String sql = 
             String.format(
-                "UPDATE [dbo].[Refeicao] SET"
-                + "[Nome] = \'%s\'"
-                + ", [HorarioInicio] = \'%s\'"
-                + ", [HorarioFim] = \'%s\'"
-                + ", [HorarioLimiteReserva] = \'%s\'"
-                + "WHERE [ID] = %d"
+                "UPDATE REFEICAO SET"
+                + "NOME = \'%s\'"
+                + ", HORARIO_INICIO = \'%s\'"
+                + ", HORARIO_FIM = \'%s\'"
+                + ", HORARIO_LIMITE_RESERVA = \'%s\'"
+                + "WHERE ID = %d"
                 , refeicao.nome
                 , refeicao.horarioInicio
                 , refeicao.horarioFim
@@ -137,7 +137,7 @@ public class RefeicaoDAO implements DAO<Refeicao>{
         Statement statement = null;
 
         String sql = 
-            "DELETE [dbo].[Refeicao] WHERE [ID] = " + id;
+            "DELETE REFEICAO WHERE ID = " + id;
 
         try {
             connection = instance.getConnection();
@@ -158,10 +158,10 @@ public class RefeicaoDAO implements DAO<Refeicao>{
         try {
             while (result.next()) {
                 refeicao.id = result.getInt("ID");
-                refeicao.nome = result.getString("Nome");
-                refeicao.horarioInicio = LocalTime.parse(result.getString("HorarioInicio"));
-                refeicao.horarioFim = LocalTime.parse(result.getString("HorarioFim"));
-                refeicao.horarioLimiteReserva = LocalTime.parse(result.getString("HorarioLimiteReserva"));
+                refeicao.nome = result.getString("NOME");
+                refeicao.horarioInicio = LocalTime.parse(result.getString("HORARIO_INICIO"));
+                refeicao.horarioFim = LocalTime.parse(result.getString("HORARIO_FIM"));
+                refeicao.horarioLimiteReserva = LocalTime.parse(result.getString("HORARIO_LIMITE_RESERVA"));
             }
         }
         catch (Exception exception) {
