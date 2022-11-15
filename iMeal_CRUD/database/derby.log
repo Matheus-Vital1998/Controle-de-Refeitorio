@@ -1,86 +1,19 @@
-Wed Nov 09 21:39:26 BRT 2022 : Apache Derby Servidor de Rede - 10.14.2.0 - (1828579) iniciado e pronto para aceitar conexões na porta 1527 em {3}
-Wed Nov 09 21:39:26 BRT 2022 Thread[DRDAConnThread_2,5,main] Cleanup action starting
-java.sql.SQLException: Banco de dados 'iMeal' não encontrado.
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569)
-	at org.apache.derby.jdbc.InternalDriver.getNewEmbedConnection(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
-	at org.apache.derby.impl.drda.Database.makeConnection(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
-Caused by: ERROR XJ004: Banco de dados 'iMeal' não encontrado.
-	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(Unknown Source)
-	... 21 more
-============= begin nested exception, level (1) ===========
-ERROR XJ004: Banco de dados 'iMeal' não encontrado.
-	at org.apache.derby.iapi.error.StandardException.newException(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.wrapArgsForTransportAcrossDRDA(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.Util.generateCsSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.newSQLException(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.handleDBNotFound(Unknown Source)
-	at org.apache.derby.impl.jdbc.EmbedConnection.<init>(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver$1.run(Unknown Source)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:569)
-	at org.apache.derby.jdbc.InternalDriver.getNewEmbedConnection(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
-	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
-	at org.apache.derby.jdbc.EmbeddedDriver.connect(Unknown Source)
-	at org.apache.derby.impl.drda.Database.makeConnection(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.getConnFromDatabaseName(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.verifyUserIdPassword(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseSECCHK(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.parseDRDAConnection(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.processCommands(Unknown Source)
-	at org.apache.derby.impl.drda.DRDAConnThread.run(Unknown Source)
-============= end nested exception, level (1) ===========
-Cleanup action completed
-Wed Nov 09 21:39:26 BRT 2022 Thread[DRDAConnThread_2,5,main] (DATABASE = iMeal), (DRDAID = {1}), Banco de dados 'iMeal' não encontrado.
 ----------------------------------------------------------------
-Wed Nov 09 21:40:04 BRT 2022:
- Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instância a816c00e-0184-5efa-3599-00005de185b8
-no diretório de banco de dados C:\Users\082190035\Desktop\Controle-de-Refeitorio\iMeal_CRUD\database\iMeal 
-
+Tue Nov 15 18:08:30 BRT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance a816c00e-0184-7d1f-3f70-00000729d990 
+on database directory /home/lpsavassa/Desktop/Controle-de-Refeitorio/iMeal_CRUD/database/imeal with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@46fbb2c1 
+Loaded from file:/opt/db-derby-10.16.1.1-bin/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=17.0.3.1+2-LTS-6
-user.dir=C:\Servers\db-derby-10.14.2.0-bin
-os.name=Windows 10
+java.runtime.version=18.0.2+9-61
+user.dir=/home/lpsavassa/Desktop/Controle-de-Refeitorio/iMeal_CRUD/database
+os.name=Linux
 os.arch=amd64
-os.version=10.0
-derby.system.home=C:\Users\082190035\Desktop\Controle-de-Refeitorio\iMeal_CRUD\database
-Carregador de classe do banco de dados iniciado - derby.database.classpath=''
+os.version=5.4.0-131-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-Wed Nov 09 21:40:04 BRT 2022:
-Encerrando a instância a816c00e-0184-5efa-3599-00005de185b8
-Wed Nov 09 21:40:04 BRT 2022 Thread[DRDAConnThread_2,5,main] (DATABASE = iMeal), (DRDAID = {3}), Banco de dados 'iMeal' fechado.
+Tue Nov 15 18:10:31 BRT 2022: Shutting down Derby engine
 ----------------------------------------------------------------
-Wed Nov 09 21:40:08 BRT 2022:
- Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instância 6ede40af-0184-5efa-3599-00005de185b8
-no diretório de banco de dados C:\Users\082190035\Desktop\Controle-de-Refeitorio\iMeal_CRUD\database\iMeal 
-
-java.vendor=Oracle Corporation
-java.runtime.version=17.0.3.1+2-LTS-6
-user.dir=C:\Servers\db-derby-10.14.2.0-bin
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
-derby.system.home=C:\Users\082190035\Desktop\Controle-de-Refeitorio\iMeal_CRUD\database
-Carregador de classe do banco de dados iniciado - derby.database.classpath=''
+Tue Nov 15 18:10:31 BRT 2022:
+Shutting down instance a816c00e-0184-7d1f-3f70-00000729d990 on database directory /home/lpsavassa/Desktop/Controle-de-Refeitorio/iMeal_CRUD/database/imeal with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@46fbb2c1 
+----------------------------------------------------------------
