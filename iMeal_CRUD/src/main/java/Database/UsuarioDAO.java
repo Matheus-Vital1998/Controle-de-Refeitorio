@@ -159,7 +159,7 @@ public class UsuarioDAO implements DAO<Usuario> {
         Usuario usuario = null;
 
         String sql =
-            "SELECT * FROM USUARIO WHERE LOGIN = " + login + " And SENHA = " + senha;
+            String.format("SELECT * FROM USUARIO WHERE LOGIN = '%s' And SENHA = '%s'", login, senha);
 
         try {
             connection = instance.getConnection();
