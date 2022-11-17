@@ -1,4 +1,4 @@
-AUTOCOMMIT OFF;
+
 
 -- \************************************************************\
 
@@ -15,7 +15,7 @@ ALTER TABLE USUARIO
 	ADD CONSTRAINT CHECK_USUARIO_TIPO
 		CHECK (TIPO IN ('ALUNO', 'ADMIN'));
 
-COMMIT;
+
 
 -- \************************************************************\
 
@@ -27,7 +27,7 @@ CREATE TABLE REFEICAO (
 	HORARIO_LIMITE_RESERVA TIME NOT NULL
 );
 
-COMMIT;
+
 
 -- \************************************************************\
 
@@ -44,7 +44,7 @@ ALTER TABLE CARDAPIO
 			ON DELETE CASCADE
 			ON UPDATE RESTRICT;
 
-COMMIT;
+
 
 -- \************************************************************\
 
@@ -67,7 +67,7 @@ ALTER TABLE RESERVA
 			ON DELETE CASCADE
 			ON UPDATE RESTRICT;
 
-COMMIT;
+
 
 -- \************************************************************\
 
@@ -92,4 +92,3 @@ ALTER TABLE HISTORICO_ENTRADA
 			ON DELETE CASCADE
 			ON UPDATE RESTRICT;
 
-COMMIT;

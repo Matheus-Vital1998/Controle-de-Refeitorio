@@ -4,14 +4,8 @@ import java.sql.*;
 
 public class ConnectionFactory {
     
-    private final String connectionString = "jdbc:sqlserver://imeal.database.windows.net:1433;"
-        + "database=iMeal;"
-        + "user=imeal@imeal;"
-        + "password=Password#123;"
-        + "encrypt=true;"
-        + "trustServerCertificate=false;"
-        + "hostNameInCertificate=*.database.windows.net;"
-        + "loginTimeout=30;";
+    //Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+    private final String connectionString = "jdbc:derby://localhost:1527/iMeal";
 
     private static ConnectionFactory instance = null;
 
@@ -26,7 +20,7 @@ public class ConnectionFactory {
 
     public Connection getConnection() {
         try {
-            Connection connection = DriverManager.getConnection(connectionString);            
+            Connection connection = DriverManager.getConnection(connectionString,"iMeal","iMeal");
             return connection;
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
