@@ -92,24 +92,11 @@ ALTER TABLE HISTORICO_ENTRADA
 			ON UPDATE RESTRICT;
 
 
-
-INSERT INTO iMeal.USUARIO (RA,NOME,LOGIN,SENHA,TIPO) VALUES (
-    '081200024',
-    'ADMINISTRADOR 1',
-    'adm@adm',
-    'adm1234',
-    'ADMIN'
-)
-INSERT INTO iMeal.USUARIO (RA,NOME,LOGIN,SENHA,TIPO) VALUES (
-    '081200024',
-    'ALUNO 1',
-    'aluno@aluno',
-    'aluno1234',
-    'ALUNO'
-)
-INSERT INTO iMeal.REFEICAO (NOME, HORARIO_INICIO, HORARIO_FIM, HORARIO_LIMITE_RESERVA) VALUES (
-    'Janta',
-    '18:15',
-    '19:05',
-    '17:00'
-)
+INSERT INTO iMeal.USUARIO (RA,NOME,LOGIN,SENHA,TIPO) VALUES 
+    ('081200024',    'ALUNO 1',    'aluno@aluno',    'aluno1234',    'ALUNO'),
+    ('7308',    'ADMINISTRADOR 1',    'adm@adm',    'adm1234',    'ADMIN')
+    
+    
+INSERT INTO iMeal.REFEICAO (NOME, HORARIO_INICIO, HORARIO_FIM, HORARIO_LIMITE_RESERVA) VALUES
+    ('Janta',    '18:15',    '19:05',    '17:00'),
+    ('Lanche Reforçado',    '20:50',    '21:05',    '19:50')
