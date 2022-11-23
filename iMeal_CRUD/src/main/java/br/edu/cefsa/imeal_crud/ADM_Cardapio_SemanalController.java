@@ -12,6 +12,7 @@ import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -32,7 +33,7 @@ public class ADM_Cardapio_SemanalController implements Initializable {
     public static String diaDaSemanaEscolhido = "";
     public static Refeicao refeicaoEscolhida;
 
-    private static Integer[] diasDaSemana;
+    private static LocalDate[] diasDaSemana;
     private static RefeicaoDAO refeicaoDAO;
 
     @FXML
@@ -55,43 +56,30 @@ public class ADM_Cardapio_SemanalController implements Initializable {
         dataEscolhida = LocalDate.now();
         diasDaSemana = getDiasDaSemana(dataEscolhida);
 
-        lblDiaSegunda.setText(String.format("%02d", diasDaSemana[0]) + "/"
-                + String.format("%02d", dataEscolhida.getMonthValue()) + "/"
-                + dataEscolhida.getYear());
-        lblDiaTerca.setText(String.format("%02d", diasDaSemana[1]) + "/"
-                + String.format("%02d", dataEscolhida.getMonthValue()) + "/"
-                + dataEscolhida.getYear());
-        lblDiaQuarta.setText(String.format("%02d", diasDaSemana[2]) + "/"
-                + String.format("%02d", dataEscolhida.getMonthValue()) + "/"
-                + dataEscolhida.getYear());
-        lblDiaQuinta.setText(String.format("%02d", diasDaSemana[3]) + "/"
-                + String.format("%02d", dataEscolhida.getMonthValue()) + "/"
-                + dataEscolhida.getYear());
-        lblDiaSexta.setText(String.format("%02d", diasDaSemana[4]) + "/"
-                + String.format("%02d", dataEscolhida.getMonthValue()) + "/"
-                + dataEscolhida.getYear());
+        lblDiaSegunda.setText(diasDaSemana[0].format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        lblDiaTerca.setText(diasDaSemana[1].format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        lblDiaQuarta.setText(diasDaSemana[2].format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        lblDiaQuinta.setText(diasDaSemana[3].format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        lblDiaSexta.setText(diasDaSemana[4].format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
-    private Integer[] getDiasDaSemana(LocalDate dataAtual) {
+private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
         //0 - Seg, 1 - Ter, ..., 6 - Dom
         Integer diaDaSemanaAtual = DayOfWeek.from(dataAtual).getValue() - 1;
 
-        Integer[] diasDaSemana = new Integer[7];
+        LocalDate[] diasDaSemana = new LocalDate[7];
 
         if (diaDaSemanaAtual < 5) { //normal
-            diasDaSemana[0] = dataAtual.getDayOfMonth() - diaDaSemanaAtual;
+            diasDaSemana[0] = dataAtual.minusDays(diaDaSemanaAtual);
 
         } else { //sábado ou domingo, vai pra próxima semana
-            diasDaSemana[0] = dataAtual.getDayOfMonth() - diaDaSemanaAtual + 7;
+            diasDaSemana[0] = dataAtual.minusDays(diaDaSemanaAtual + 7);
             diaDaSemanaAtual = DayOfWeek.from(dataAtual).getValue() - 1;
         }
-
-        diasDaSemana[1] = diasDaSemana[0] + 1;
-        diasDaSemana[2] = diasDaSemana[0] + 2;
-        diasDaSemana[3] = diasDaSemana[0] + 3;
-        diasDaSemana[4] = diasDaSemana[0] + 4;
-        diasDaSemana[5] = diasDaSemana[0] + 5;
-        diasDaSemana[6] = diasDaSemana[0] + 6;
+        
+        for(int i = 1; i<7; i++){     
+            diasDaSemana[i] = diasDaSemana[0].plusDays(i);
+        }
 
         return diasDaSemana;
     }
@@ -125,19 +113,19 @@ public class ADM_Cardapio_SemanalController implements Initializable {
             //Dia
             if (dia_da_semana == "Segunda") {
                 diaDaSemanaEscolhido = "Segunda";
-                dataEscolhida = dataEscolhida.withDayOfMonth(diasDaSemana[0]);
+                dataEscolhida = diasDaSemana[0];
             } else if (dia_da_semana == "Terça") {
                 diaDaSemanaEscolhido = "Terça";
-                dataEscolhida = dataEscolhida.withDayOfMonth(diasDaSemana[1]);
+                dataEscolhida = diasDaSemana[1];
             } else if (dia_da_semana == "Quarta") {
                 diaDaSemanaEscolhido = "Quarta";
-                dataEscolhida = dataEscolhida.withDayOfMonth(diasDaSemana[2]);
+                dataEscolhida = diasDaSemana[2];
             } else if (dia_da_semana == "Quinta") {
                 diaDaSemanaEscolhido = "Quinta";
-                dataEscolhida = dataEscolhida.withDayOfMonth(diasDaSemana[3]);
+                dataEscolhida = diasDaSemana[3];
             } else if (dia_da_semana == "Sexta") {
                 diaDaSemanaEscolhido = "Sexta";
-                dataEscolhida = dataEscolhida.withDayOfMonth(diasDaSemana[4]);
+                dataEscolhida = diasDaSemana[4];
             } else {
                 MsgErro("Ocorreu algo de errado. Tente reiniciar o programa.");
             }
