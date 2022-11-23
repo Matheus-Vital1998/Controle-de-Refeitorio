@@ -37,12 +37,10 @@ public class ADM_Relatorios_TabelasController implements Initializable {
     @FXML
     private void OnClick_btnJanta() throws IOException{
         
-        App.setRoot("ViewADM_Relatorios_Tabela");
     }
     
     @FXML
     private void OnClick_btnLanche_Reforcado() throws IOException{
         
-        App.setRoot("ViewADM_Relatorios_Tabela");
     }
 }
