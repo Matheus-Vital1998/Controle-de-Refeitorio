@@ -46,7 +46,8 @@ public class ADM_CRUD_CardapioController implements Initializable {
         cardapioEscolhido = new Cardapio();
         cardapioEscolhido = cardapioDAO.read(ADM_Cardapio_SemanalController.dataEscolhida,
                 ADM_Cardapio_SemanalController.refeicaoEscolhida.id);
-
+              
+        
         //Se descrição vazia - criação; se não - edição
         String tituloTela = "";
         descricaoCriada = (cardapioEscolhido.descricao == null || cardapioEscolhido.descricao.matches(""));
@@ -80,7 +81,7 @@ public class ADM_CRUD_CardapioController implements Initializable {
                 return;
             }
             
-            if (descricaoNova.matches(cardapioEscolhido.descricao)){
+            if (cardapioEscolhido.descricao != null && descricaoNova.matches(cardapioEscolhido.descricao)){
                 MsgBox("Inválido", "Nenhuma mudança feita ...");
                 return;
             }
@@ -88,7 +89,12 @@ public class ADM_CRUD_CardapioController implements Initializable {
             int resp = MsgBox("Confirmação", "Salvar as alterações feitas?");
             if (resp == 0) { //Se foi OK
                 cardapioEscolhido.descricao = descricaoNova;
-
+                //Se não achou, preenche com o escolhido
+                if (cardapioEscolhido.id == null){
+                    cardapioEscolhido.data = ADM_Cardapio_SemanalController.dataEscolhida;
+                    cardapioEscolhido.refeicaoID = ADM_Cardapio_SemanalController.refeicaoEscolhida.id;
+                }
+        
                 if (descricaoCriada) {
                     cardapioDAO.create(cardapioEscolhido);
                 } else {

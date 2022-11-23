@@ -20,7 +20,7 @@ public class CardapioDAO implements DAO<Cardapio> {
 
         String sql =
             String.format(
-                "INSERT INTO CARDAPIO VALUES ("
+                "INSERT INTO iMeal.CARDAPIO VALUES ("
                 + "%d"
                 + ", '%s'"
                 + ", '%s')"
@@ -49,7 +49,7 @@ public class CardapioDAO implements DAO<Cardapio> {
         ResultSet result = null;
         Cardapio cardapio = null;
         
-        String sql = "SELECT * FROM CARDAPIO WHERE ID = " + id;
+        String sql = "SELECT * FROM iMeal.CARDAPIO WHERE ID = " + id;
         
         try {
             connection = instance.getConnection();
@@ -73,8 +73,8 @@ public class CardapioDAO implements DAO<Cardapio> {
         ResultSet result = null;
         Cardapio cardapio = null;
         
-        String sql = "SELECT * FROM CARDAPIO WHERE REFEICAO_ID = " 
-                + idRefeicao + " And DATA = " + data;
+        String sql = "SELECT * FROM iMeal.CARDAPIO WHERE REFEICAO_ID = " 
+                + idRefeicao + " And DATA = '" + data + "'";
         
         try {
             connection = instance.getConnection();
@@ -100,7 +100,7 @@ public class CardapioDAO implements DAO<Cardapio> {
 
         String sql =
             String.format(
-                "UPDATE CARDAPIO SET"
+                "UPDATE iMeal.CARDAPIO SET"
                 + "REFEICAO_ID = %d"
                 + ", DATA = \'%s\'"
                 + ", DESCRICAO = \'%s\'"
@@ -129,7 +129,7 @@ public class CardapioDAO implements DAO<Cardapio> {
         Connection connection = null;
         Statement statement = null;
 
-        String sql = "DELETE CARDAPIO WHERE ID = " + id;
+        String sql = "DELETE iMeal.CARDAPIO WHERE ID = " + id;
         
         try {
             connection = instance.getConnection();

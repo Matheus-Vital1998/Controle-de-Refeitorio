@@ -70,6 +70,7 @@ public class RefeicaoDAO implements DAO<Refeicao>{
 
         return refeicao;
     }
+    
     public Refeicao read(String nome_refeicao) {
         Connection connection = null;
         Statement statement = null;
@@ -77,7 +78,7 @@ public class RefeicaoDAO implements DAO<Refeicao>{
         Refeicao refeicao = null;
 
         String sql =
-            "SELECT * FROM REFEICAO WHERE NOME = " + nome_refeicao;
+            "SELECT * FROM REFEICAO WHERE NOME = '" + nome_refeicao + "'";
 
         try {
             connection = instance.getConnection();
