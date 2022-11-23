@@ -19,6 +19,7 @@
                         <Image url="@../../../../imgs/iMeal_Logo_Oficial_2.png" />
                      </image>
                   </ImageView>
+                  <Label layoutX="714.0" layoutY="6.0" text="Administrador:" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="434.0" prefWidth="778.0" style="-fx-background-color: rgb(235,235,239);">

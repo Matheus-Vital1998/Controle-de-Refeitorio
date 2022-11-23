@@ -18,10 +18,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("ViewADM_Inicial"), 640, 480);
+        scene = new Scene(loadFXML("ViewALN_Cardapio_Semanal"), 640, 480);
         stage.getIcons().add(new Image("/imgs/iMeal_Logo_Oficial_2.png"));
         stage.setTitle("iMeal");
-        stage.setWidth(800);
+        stage.setWidth(804);
         stage.setHeight(540);
         stage.setScene(scene);
         stage.show();

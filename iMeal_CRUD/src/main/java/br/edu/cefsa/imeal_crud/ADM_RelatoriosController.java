@@ -4,11 +4,12 @@
  */
 package br.edu.cefsa.imeal_crud;
 
-import static br.edu.cefsa.imeal_crud.ADM_Cardapio_SemanalController.dataEscolhida;
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -71,38 +72,31 @@ public class ADM_RelatoriosController implements Initializable {
         return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
     
-    private Integer[] getDiasDaSemana(LocalDate dataAtual) {
+    private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
         //0 - Seg, 1 - Ter, ..., 6 - Dom
         Integer diaDaSemanaAtual = DayOfWeek.from(dataAtual).getValue() - 1;
 
-        Integer[] diasDaSemana = new Integer[7];
+        LocalDate[] diasDaSemana = new LocalDate[7];
 
         if (diaDaSemanaAtual < 5) { //normal
-            diasDaSemana[0] = dataAtual.getDayOfMonth() - diaDaSemanaAtual;
+            diasDaSemana[0] = dataAtual.minusDays(diaDaSemanaAtual);
 
         } else { //sábado ou domingo, vai pra próxima semana
-            diasDaSemana[0] = dataAtual.getDayOfMonth() - diaDaSemanaAtual + 7;
+            diasDaSemana[0] = dataAtual.minusDays(diaDaSemanaAtual + 7);
             diaDaSemanaAtual = DayOfWeek.from(dataAtual).getValue() - 1;
         }
-
-        diasDaSemana[1] = diasDaSemana[0] + 1;
-        diasDaSemana[2] = diasDaSemana[0] + 2;
-        diasDaSemana[3] = diasDaSemana[0] + 3;
-        diasDaSemana[4] = diasDaSemana[0] + 4;
-        diasDaSemana[5] = diasDaSemana[0] + 5;
-        diasDaSemana[6] = diasDaSemana[0] + 6;
+        
+        for(int i = 1; i<7; i++){     
+            diasDaSemana[i] = diasDaSemana[0].plusDays(i);
+        }
 
         return diasDaSemana;
     }
     
     private String FormataSemana(LocalDate date){
-        Integer[] diasDaSemana = getDiasDaSemana(date); 
-        return String.format("%02d", diasDaSemana[0]) + "/"
-                + String.format("%02d", date.getMonthValue()) + "/"
-                + date.getYear() 
+        LocalDate[] diasDaSemana = getDiasDaSemana(date); 
+        return diasDaSemana[0].format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                 + " - "
-                + String.format("%02d", diasDaSemana[4]) + "/"
-                + String.format("%02d", date.getMonthValue()) + "/"
-                + date.getYear();
+                + diasDaSemana[4].format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }
