@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
@@ -8,7 +12,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="501.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.cefsa.imeal_crud.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="501.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.cefsa.imeal_crud.LoginController">
    <children>
       <SplitPane dividerPositions="0.12424849699398798" layoutX="-7.0" orientation="VERTICAL" prefHeight="501.0" prefWidth="795.0">
         <items>
@@ -24,10 +28,10 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="434.0" prefWidth="778.0" style="-fx-background-color: rgb(235,235,239);">
                <children>
                   <Button fx:id="btnEntrar" layoutX="373.0" layoutY="360.0" mnemonicParsing="false" onAction="#OnClick_btnEntrar" text="Entrar" />
-                  <TextField fx:id="txtLogin" layoutX="146.0" layoutY="164.0" prefHeight="25.0" prefWidth="558.0" />
+                  <TextField fx:id="txtLogin" layoutX="146.0" layoutY="164.0" prefHeight="25.0" prefWidth="558.0" text="adm@adm" />
                   <Label layoutX="109.0" layoutY="168.0" text="Login" />
                   <Label layoutX="108.0" layoutY="229.0" text="Senha" />
-                  <TextField fx:id="txtSenha" layoutX="151.0" layoutY="225.0" prefHeight="25.0" prefWidth="558.0" />
+                  <TextField fx:id="txtSenha" layoutX="151.0" layoutY="225.0" prefHeight="25.0" prefWidth="558.0" text="adm1234" />
                   <Label layoutX="382.0" layoutY="72.0" text="Login" />
                   <Label fx:id="lblValidacao" layoutX="110.0" layoutY="287.0" textFill="RED" />
                </children></AnchorPane>

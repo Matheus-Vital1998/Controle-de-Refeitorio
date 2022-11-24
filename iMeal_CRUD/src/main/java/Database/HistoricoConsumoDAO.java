@@ -14,7 +14,7 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
     public void create(HistoricoConsumo historicoConsumo) throws Exception {
         String sql = 
             String.format(
-                "INSERT INTO HISTORICO_CONSUMO VALUES ("
+                "INSERT INTO HISTORICO_CONSUMO (USUARIO_ID, CARDAPIO_ID, HORARIO_CHEGADA, ENTRADA_AUTORIZADA, MOTIVO) VALUES ("
                 + "%d"
                 + ", %d"
                 + ", '%s'"
@@ -49,7 +49,7 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
     public void update(HistoricoConsumo historicoConsumo) throws Exception {
         String sql = 
             String.format(
-                "UPDATE HISTORICO_CONSUMO SET"
+                "UPDATE HISTORICO_CONSUMO SET "
                 + "USUARIO_ID = %d"
                 + ", CARDAPIO_ID = %d"
                 + ", HORARIO_CHEGADA = '%s'"
@@ -69,7 +69,7 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
 
     @Override
     public void delete(Integer id) throws Exception {
-        String sql = "DELETE HISTORICO_CONSUMO WHERE ID = " + id;
+        String sql = "DELETE FROM HISTORICO_CONSUMO WHERE ID = " + id;
 
         Connection connection = connectionFactory.getConnection();
         Statement statement = connection.createStatement();

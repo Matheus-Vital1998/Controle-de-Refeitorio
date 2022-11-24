@@ -20,7 +20,7 @@ public class CardapioDAO implements DAO<Cardapio> {
 
         String sql =
             String.format(
-                "INSERT INTO CARDAPIO VALUES ("
+                "INSERT INTO CARDAPIO (REFEICAO_ID, DATA, DESCRICAO) VALUES ("
                 + "%d"
                 + ", '%s'"
                 + ", '%s')"
@@ -74,7 +74,7 @@ public class CardapioDAO implements DAO<Cardapio> {
         Cardapio cardapio = null;
         
         String sql = "SELECT * FROM CARDAPIO WHERE REFEICAO_ID = " 
-                + idRefeicao + " And DATA = " + data;
+                + idRefeicao + " And DATA = '" + data + "'";
         
         try {
             connection = instance.getConnection();
@@ -100,7 +100,7 @@ public class CardapioDAO implements DAO<Cardapio> {
 
         String sql =
             String.format(
-                "UPDATE CARDAPIO SET"
+                "UPDATE CARDAPIO SET "
                 + "REFEICAO_ID = %d"
                 + ", DATA = \'%s\'"
                 + ", DESCRICAO = \'%s\'"
@@ -129,7 +129,7 @@ public class CardapioDAO implements DAO<Cardapio> {
         Connection connection = null;
         Statement statement = null;
 
-        String sql = "DELETE CARDAPIO WHERE ID = " + id;
+        String sql = "DELETE FROM CARDAPIO WHERE ID = " + id;
         
         try {
             connection = instance.getConnection();

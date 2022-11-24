@@ -1,6 +1,7 @@
 br\edu\cefsa\imeal_crud\ADM_Criar_Conta_AdminController.class
 Database\RefeicaoDAO.class
 br\edu\cefsa\imeal_crud\ADM_InicialController.class
+br\edu\cefsa\imeal_crud\ADM_Relatorios_TabelasController.class
 Domain\Cardapio.class
 Domain\TipoUsuario.class
 Database\HistoricoConsumoDAO.class
@@ -22,3 +23,4 @@ br\edu\cefsa\imeal_crud\ADM_Alterar_ReservaController.class
 br\edu\cefsa\imeal_crud\ALN_Cardapio_SemanalController.class
 Domain\Reserva.class
 Domain\Usuario.class
+br\edu\cefsa\imeal_crud\ADM_Relatorios_CardsController.class

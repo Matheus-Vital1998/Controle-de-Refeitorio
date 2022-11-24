@@ -52,7 +52,7 @@ public class ADM_Cardapio_SemanalController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        refeicaoDAO = new RefeicaoDAO();
         dataEscolhida = LocalDate.now();
         diasDaSemana = getDiasDaSemana(dataEscolhida);
 
