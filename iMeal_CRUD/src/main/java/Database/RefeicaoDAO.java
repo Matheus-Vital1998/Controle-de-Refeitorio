@@ -19,7 +19,7 @@ public class RefeicaoDAO implements DAO<Refeicao>{
 
         String sql = 
             String.format(
-                "INSERT INTO REFEICAO VALUES ("
+                "INSERT INTO REFEICAO (NOME, HORARIO_INICIO, HORARIO_FIM, HORARIO_LIMITE_RESERVA) VALUES ("
                 + "\'%s\'"
                 + ", \'%s\'"
                 + ", \'%s\'"
@@ -105,7 +105,7 @@ public class RefeicaoDAO implements DAO<Refeicao>{
 
         String sql = 
             String.format(
-                "UPDATE REFEICAO SET"
+                "UPDATE REFEICAO SET "
                 + "NOME = \'%s\'"
                 + ", HORARIO_INICIO = \'%s\'"
                 + ", HORARIO_FIM = \'%s\'"
@@ -138,7 +138,7 @@ public class RefeicaoDAO implements DAO<Refeicao>{
         Statement statement = null;
 
         String sql = 
-            "DELETE REFEICAO WHERE ID = " + id;
+            "DELETE FROM REFEICAO WHERE ID = " + id;
 
         try {
             connection = instance.getConnection();

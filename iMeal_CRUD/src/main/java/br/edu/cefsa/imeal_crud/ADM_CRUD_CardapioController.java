@@ -129,7 +129,11 @@ public class ADM_CRUD_CardapioController implements Initializable {
     private void OnClick_btnExcluir() throws IOException {
         int resp = MsgBox("CUIDADO", "Deseja mesmo EXCLUIR a descrição desse cardápio?");
         if (resp == 0) { //Se foi OK
-
+            if (cardapioEscolhido.id != null){
+                cardapioDAO.delete(cardapioEscolhido.id);
+            } else{
+                MsgBox("Erro", "Cardapio não encontrado. Tente reiniciar o programa.");
+            }
             App.setRoot("ViewADM_Cardapio_Semanal");
         }
     }

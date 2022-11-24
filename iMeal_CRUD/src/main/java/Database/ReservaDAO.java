@@ -20,7 +20,7 @@ public class ReservaDAO implements DAO<Reserva> {
 
         String sql = 
             String.format(
-                "INSERT INTO RESERVA VALUES ("
+                "INSERT INTO RESERVA (USUARIO_ID, CARDAPIO_ID, HORARIO_RESERVA) VALUES ("
                 + "%d"
                 + ", %d"
                 + ", '%s')"
@@ -106,7 +106,7 @@ public class ReservaDAO implements DAO<Reserva> {
         Connection connection = null;
         Statement statement = null;
 
-        String sql = "DELETE RESERVA WHERE ID = " + id;
+        String sql = "DELETE FROM RESERVA WHERE ID = " + id;
         
         try {
             connection = instance.getConnection();

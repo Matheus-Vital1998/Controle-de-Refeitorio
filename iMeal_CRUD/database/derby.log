@@ -1,19 +1,48 @@
+Wed Nov 23 21:38:43 BRT 2022 : Apache Derby Servidor de Rede - 10.10.2.0 - (1582446) iniciado e pronto para aceitar conexões na porta 1527 em {3}
 ----------------------------------------------------------------
-Tue Nov 15 18:08:30 BRT 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance a816c00e-0184-7d1f-3f70-00000729d990 
-on database directory /home/lpsavassa/Desktop/Controle-de-Refeitorio/iMeal_CRUD/database/imeal with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@46fbb2c1 
-Loaded from file:/opt/db-derby-10.16.1.1-bin/lib/derby.jar
+Wed Nov 23 21:38:44 BRT 2022:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instância a816c00e-0184-a712-95a1-ffffa8ad4757
+no diretório de banco de dados Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\database\iMeal 
+
 java.vendor=Oracle Corporation
-java.runtime.version=18.0.2+9-61
-user.dir=/home/lpsavassa/Desktop/Controle-de-Refeitorio/iMeal_CRUD/database
-os.name=Linux
+java.runtime.version=17.0.3.1+2-LTS-6
+user.dir=C:\Servers\db-derby-10.10.2.0-bin
+os.name=Windows 10
 os.arch=amd64
-os.version=5.4.0-131-generic
-derby.system.home=null
-Database Class Loader started - derby.database.classpath=''
+os.version=10.0
+derby.system.home=Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\database
+Carregador de classe do banco de dados iniciado - derby.database.classpath=''
 ----------------------------------------------------------------
-Tue Nov 15 18:10:31 BRT 2022: Shutting down Derby engine
+Wed Nov 23 21:52:47 BRT 2022:
+Encerrando a instância a816c00e-0184-a712-95a1-ffffa8ad4757
+Wed Nov 23 21:52:47 BRT 2022 Thread[DRDAConnThread_3,5,main] (DATABASE = iMeal), (DRDAID = {54}), Banco de dados 'iMeal' fechado.
 ----------------------------------------------------------------
-Tue Nov 15 18:10:31 BRT 2022:
-Shutting down instance a816c00e-0184-7d1f-3f70-00000729d990 on database directory /home/lpsavassa/Desktop/Controle-de-Refeitorio/iMeal_CRUD/database/imeal with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@46fbb2c1 
+Wed Nov 23 21:53:08 BRT 2022:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instância 89e800c0-0184-a712-95a1-ffffa8ad4757
+no diretório de banco de dados Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\database\iMeal 
+
+java.vendor=Oracle Corporation
+java.runtime.version=17.0.3.1+2-LTS-6
+user.dir=C:\Servers\db-derby-10.10.2.0-bin
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\database
+Carregador de classe do banco de dados iniciado - derby.database.classpath=''
 ----------------------------------------------------------------
+Wed Nov 23 21:53:10 BRT 2022:
+Encerrando a instância 89e800c0-0184-a712-95a1-ffffa8ad4757
+Wed Nov 23 21:53:10 BRT 2022 Thread[DRDAConnThread_3,5,main] (DATABASE = iMeal), (DRDAID = {56}), Banco de dados 'iMeal' fechado.
+----------------------------------------------------------------
+Wed Nov 23 21:53:15 BRT 2022:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instância 52f6815c-0184-a712-95a1-ffffa8ad4757
+no diretório de banco de dados Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\database\iMeal 
+
+java.vendor=Oracle Corporation
+java.runtime.version=17.0.3.1+2-LTS-6
+user.dir=C:\Servers\db-derby-10.10.2.0-bin
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\database
+Carregador de classe do banco de dados iniciado - derby.database.classpath=''

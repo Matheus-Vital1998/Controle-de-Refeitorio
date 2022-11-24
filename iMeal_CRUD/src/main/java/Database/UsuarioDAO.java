@@ -20,7 +20,7 @@ public class UsuarioDAO implements DAO<Usuario> {
 
         String sql = 
             String.format(
-                "INSERT INTO USUARIO VALUES ("
+                "INSERT INTO USUARIO (RA, NOME, LOGIN, SENHA, TIPO) VALUES ("
                 + "\'%s\'"
                 + ", \'%s\'"
                 + ", \'%s\'"
@@ -116,7 +116,7 @@ public class UsuarioDAO implements DAO<Usuario> {
         Statement statement = null;
 
         String sql = 
-            "DELETE USUARIO WHERE ID = " + id;
+            "DELETE FROM USUARIO WHERE ID = " + id;
 
         try {
             connection = instance.getConnection();
