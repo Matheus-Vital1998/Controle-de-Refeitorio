@@ -4,11 +4,20 @@
  */
 package br.edu.cefsa.imeal_crud;
 
+import Domain.Cardapio;
+import Domain.HistoricoConsumo;
+import Domain.HistoricoConsumoLimitado;
+import Domain.Refeicao;
+import Domain.TipoUsuario;
+import Domain.Usuario;
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -17,7 +26,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * FXML Controller class
@@ -30,7 +41,7 @@ public class ADM_Relatorios_TabelasController implements Initializable {
     @FXML private Label lblTitulo;
     @FXML private CheckBox cbJanta;
     @FXML private CheckBox cbLancheReforcado;
-    @FXML private TableView tableViewInfos;
+    @FXML private TableView<HistoricoConsumoLimitado> tableViewInfos;
     
     
     /**
@@ -56,7 +67,52 @@ public class ADM_Relatorios_TabelasController implements Initializable {
     }
     
     private void SetTabela(){
+        List<HistoricoConsumoLimitado> dados = new LinkedList<HistoricoConsumoLimitado>();
+        dados.add(new HistoricoConsumoLimitado(
+                "081200024", 
+                "Matheus Vinicius Miranda Brito", 
+                "Janta", 
+                LocalDate.MAX, 
+                "Feijoada", 
+                LocalTime.MIDNIGHT, 
+                Boolean.FALSE, 
+                "Tentou entrar mais de uma vez na mesma refeição"));
         
+               
+        List<TableColumn> colunas = new LinkedList<TableColumn>();
+        Integer i = 0;
+        
+        colunas.add(new TableColumn<HistoricoConsumoLimitado, String>("Nome"));
+        colunas.get(i++).setCellValueFactory(new PropertyValueFactory<HistoricoConsumoLimitado, String>("nome"));
+        
+        colunas.add(new TableColumn<HistoricoConsumoLimitado, String>("RA"));
+        colunas.get(i++).setCellValueFactory(new PropertyValueFactory<HistoricoConsumoLimitado, String>("ra"));
+        
+        colunas.add(new TableColumn<HistoricoConsumoLimitado, String>("Refeicao"));
+        colunas.get(i++).setCellValueFactory(new PropertyValueFactory<HistoricoConsumoLimitado, String>("refeicao"));
+        
+        colunas.add(new TableColumn<HistoricoConsumoLimitado, LocalDate>("Data"));
+        colunas.get(i++).setCellValueFactory(new PropertyValueFactory<HistoricoConsumoLimitado, LocalDate>("data"));
+        
+        colunas.add(new TableColumn<Cardapio, String>("Cardapio"));
+        colunas.get(i++).setCellValueFactory(new PropertyValueFactory<Cardapio, String>("descricao"));
+        
+        colunas.add(new TableColumn<HistoricoConsumoLimitado, LocalTime>("Horário de chegada"));
+        colunas.get(i++).setCellValueFactory(new PropertyValueFactory<HistoricoConsumoLimitado, LocalTime>("horarioChegada"));
+        
+        colunas.add(new TableColumn<HistoricoConsumoLimitado, Boolean>("Entrada autorizada?"));
+        colunas.get(i++).setCellValueFactory(new PropertyValueFactory<HistoricoConsumoLimitado, Boolean>("entradaAutorizada"));
+        
+        colunas.add(new TableColumn<HistoricoConsumoLimitado, String>("Motivo"));
+        colunas.get(i++).setCellValueFactory(new PropertyValueFactory<HistoricoConsumoLimitado, String>("motivo"));
+        
+        for (TableColumn coluna : colunas){
+            tableViewInfos.getColumns().add(coluna);
+        }
+        
+        tableViewInfos.getItems().setAll(dados);
+        
+        tableViewInfos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
     
     private String FormataDia(LocalDate date){

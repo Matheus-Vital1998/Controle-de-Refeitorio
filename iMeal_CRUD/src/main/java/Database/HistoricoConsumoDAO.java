@@ -2,11 +2,13 @@ package Database;
 
 import Domain.Cardapio;
 import Domain.HistoricoConsumo;
+import Domain.HistoricoConsumoLimitado;
 import Domain.Usuario;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.List;
 
 public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
     private ConnectionFactory connectionFactory;
@@ -108,5 +110,49 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
         }
 
         return historicoConsumo;
+    }
+    
+    private List<HistoricoConsumoLimitado> limitedDeserialize(ResultSet result){
+        
+        List<HistoricoConsumoLimitado> historicoConsumo = new LinkedList<HistoricoConsumoLimitado>();
+        try {
+            Integer i = 0;
+            while (result.next()) {
+                
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                Usuario usuarioAux = usuarioDAO.read(result.getInt("USUARIO_ID"));
+                historicoConsumo.get(i).setNome(usuarioAux.getNome());
+                historicoConsumo.get(i).setRa(usuarioAux.getRa());
+                
+                CardapioDAO cardapioDAO = new CardapioDAO();
+                Cardapio cardapioAux = cardapioDAO.read(result.getInt("CARDAPIO_ID"));
+                historicoConsumo.get(i).setRefeicao(cardapioAux.getRefeicao().getNome());
+                historicoConsumo.get(i).setData(cardapioAux.getData());
+                historicoConsumo.get(i).setDescricao(cardapioAux.getDescricao());
+                
+                historicoConsumo.get(i).setHorarioChegada(LocalTime.parse(result.getString("HORARIO_CHEGADA"), DateTimeFormatter.ofPattern("HH:mm:ss.S")));                
+                historicoConsumo.get(i).setEntradaAutorizada(result.getBoolean("ENTRADA_AUTORIZADA"));                
+                historicoConsumo.get(i).setMotivo(result.getString("MOTIVO"));
+                
+                i++;
+            }
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+
+        return historicoConsumo;
+    }
+    
+    public List<HistoricoConsumoLimitado> readVw_AlunosCompareceram(Integer id) throws Exception {
+        String sql = 
+            "SELECT * FROM vw_Compareceram";
+
+        Connection connection = connectionFactory.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery(sql);
+        connection.close();
+        
+        return limitedDeserialize(result);
     }
 }

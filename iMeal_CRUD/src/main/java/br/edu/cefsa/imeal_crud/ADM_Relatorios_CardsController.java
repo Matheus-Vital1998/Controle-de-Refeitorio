@@ -45,11 +45,7 @@ public class ADM_Relatorios_CardsController implements Initializable {
         try{
             cardClicado = null;
             
-            if (filtroJanta != null) {
-                cbJanta.setSelected(filtroJanta);            }
-            if (filtroLancheReforcado != null) {
-                cbLancheReforcado.setSelected(filtroLancheReforcado);
-            }
+            SetFiltroRefeicao();
             SetData();        
             
             //Falta setar os valores dos cards (very important)
@@ -130,6 +126,19 @@ public class ADM_Relatorios_CardsController implements Initializable {
             lblDia.setText(FormataSemana(ADM_RelatoriosController.dataEscolhida[0]));
         }else{
             MsgBox("Erro", "Tipo de relatório inválido. Tente reiniciar o programa.");
+        }
+    }
+    
+    private void SetFiltroRefeicao(){
+        if (filtroJanta != null) {
+            cbJanta.setSelected(filtroJanta);
+        } else{
+            filtroJanta = cbJanta.isSelected();
+        }
+        if (filtroLancheReforcado != null) {
+            cbLancheReforcado.setSelected(filtroLancheReforcado);
+        }else{
+            filtroLancheReforcado = cbLancheReforcado.isSelected();
         }
     }
     

@@ -27,7 +27,7 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="434.0" prefWidth="778.0" style="-fx-background-color: rgb(235,235,239);">
                <children>
                   <Label layoutX="355.0" layoutY="26.0" text="CRUD Cardapio" />
-                  <TextArea fx:id="txtDescricao" layoutX="26.0" layoutY="76.0" prefHeight="320.0" prefWidth="518.0" />
+                  <TextArea fx:id="txtDescricao" editable="false" layoutX="26.0" layoutY="76.0" prefHeight="320.0" prefWidth="518.0" />
                   <Label layoutX="26.0" layoutY="59.0" text="Descrição:" />
                   <Pane layoutX="562.0" layoutY="76.0" prefHeight="320.0" prefWidth="216.0" style="-fx-background-color: rgb(222,222,230);">
                      <children>
