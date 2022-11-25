@@ -5,6 +5,7 @@
 package br.edu.cefsa.imeal_crud;
 
 import Database.CardapioDAO;
+import Database.RefeicaoDAO;
 import Domain.Cardapio;
 
 import java.io.IOException;
@@ -45,21 +46,21 @@ public class ADM_CRUD_CardapioController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         cardapioEscolhido = new Cardapio();
         cardapioEscolhido = cardapioDAO.read(ADM_Cardapio_SemanalController.dataEscolhida,
-                ADM_Cardapio_SemanalController.refeicaoEscolhida.id);
+                ADM_Cardapio_SemanalController.refeicaoEscolhida.getId());
               
         
         //Se descrição vazia - criação; se não - edição
         String tituloTela = "";
-        descricaoCriada = (cardapioEscolhido.descricao == null || cardapioEscolhido.descricao.matches(""));
+        descricaoCriada = (cardapioEscolhido.getDescricao() == null || cardapioEscolhido.getDescricao().matches(""));
         if (descricaoCriada) {
             tituloTela = "Criar cardápio";
             btnExcluir.setVisible(false);
         } else {
             tituloTela = "Editar cardápio";
-            txtDescricao.setText(cardapioEscolhido.descricao);
+            txtDescricao.setText(cardapioEscolhido.getDescricao());
         }
         
-        tituloTela += ": " + ADM_Cardapio_SemanalController.refeicaoEscolhida.nome + " de "
+        tituloTela += ": " + ADM_Cardapio_SemanalController.refeicaoEscolhida.getNome() + " de "
                 + ADM_Cardapio_SemanalController.diaDaSemanaEscolhido + " - "
                 + ADM_Cardapio_SemanalController.dataEscolhida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
@@ -81,18 +82,19 @@ public class ADM_CRUD_CardapioController implements Initializable {
                 return;
             }
             
-            if (cardapioEscolhido.descricao != null && descricaoNova.matches(cardapioEscolhido.descricao)){
+            if (cardapioEscolhido.getDescricao() != null && descricaoNova.matches(cardapioEscolhido.getDescricao())){
                 MsgBox("Inválido", "Nenhuma mudança feita ...");
                 return;
             }
 
             int resp = MsgBox("Confirmação", "Salvar as alterações feitas?");
             if (resp == 0) { //Se foi OK
-                cardapioEscolhido.descricao = descricaoNova;
+                cardapioEscolhido.setDescricao(descricaoNova);
                 //Se não achou, preenche com o escolhido
-                if (cardapioEscolhido.id == null){
-                    cardapioEscolhido.data = ADM_Cardapio_SemanalController.dataEscolhida;
-                    cardapioEscolhido.refeicaoID = ADM_Cardapio_SemanalController.refeicaoEscolhida.id;
+                if (cardapioEscolhido.getId() == null){
+                    cardapioEscolhido.setData(ADM_Cardapio_SemanalController.dataEscolhida);
+                    RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
+                    cardapioEscolhido.setRefeicao(refeicaoDAO.read(ADM_Cardapio_SemanalController.refeicaoEscolhida.getId()));
                 }
         
                 if (descricaoCriada) {
@@ -112,7 +114,7 @@ public class ADM_CRUD_CardapioController implements Initializable {
     private void OnClick_btnCancelar() throws IOException {
         try {
             if (txtDescricao.getText().trim().matches("") ||
-                    txtDescricao.getText().trim().matches(cardapioEscolhido.descricao)) {
+                    txtDescricao.getText().trim().matches(cardapioEscolhido.getDescricao())) {
                 App.setRoot("ViewADM_Cardapio_Semanal");
             } else {
                 int resp = MsgBox("Atenção", "Deseja descartar as alterações feitas?");
@@ -129,8 +131,8 @@ public class ADM_CRUD_CardapioController implements Initializable {
     private void OnClick_btnExcluir() throws IOException {
         int resp = MsgBox("CUIDADO", "Deseja mesmo EXCLUIR a descrição desse cardápio?");
         if (resp == 0) { //Se foi OK
-            if (cardapioEscolhido.id != null){
-                cardapioDAO.delete(cardapioEscolhido.id);
+            if (cardapioEscolhido.getId() != null){
+                cardapioDAO.delete(cardapioEscolhido.getId());
             } else{
                 MsgBox("Erro", "Cardapio não encontrado. Tente reiniciar o programa.");
             }

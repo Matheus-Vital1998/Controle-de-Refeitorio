@@ -24,9 +24,9 @@ public class CardapioDAO implements DAO<Cardapio> {
                 + "%d"
                 + ", '%s'"
                 + ", '%s')"
-                , cardapio.refeicaoID
-                , cardapio.data
-                , cardapio.descricao);
+                , cardapio.getRefeicao().getId()
+                , cardapio.getData()
+                , cardapio.getDescricao());
         
         try {
             connection = instance.getConnection();
@@ -105,10 +105,10 @@ public class CardapioDAO implements DAO<Cardapio> {
                 + ", DATA = \'%s\'"
                 + ", DESCRICAO = \'%s\'"
                 + " WHERE ID = %d"
-                , cardapio.refeicaoID
-                , cardapio.data
-                , cardapio.descricao
-                , cardapio.id);
+                , cardapio.getRefeicao().getId()
+                , cardapio.getData()
+                , cardapio.getDescricao()
+                , cardapio.getId());
         
         try {
             connection = instance.getConnection();
@@ -149,10 +149,13 @@ public class CardapioDAO implements DAO<Cardapio> {
         Cardapio cardapio = new Cardapio();
         try {
             while (result.next()) {
-                cardapio.id = result.getInt("ID");
-                cardapio.refeicaoID = result.getInt("REFEICAO_ID");
-                cardapio.data = LocalDate.parse(result.getString("DATA"));
-                cardapio.descricao = result.getString("DESCRICAO");
+                cardapio.setId(result.getInt("ID"));
+                
+                RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
+                cardapio.setRefeicao(refeicaoDAO.read(result.getInt("REFEICAO_ID")));
+                
+                cardapio.setData(LocalDate.parse(result.getString("DATA")));
+                cardapio.setDescricao(result.getString("DESCRICAO"));
             }
         }
         catch (Exception exception) {

@@ -26,7 +26,8 @@ public class UsuarioDAO implements DAO<Usuario> {
                 + ", \'%s\'"
                 + ", \'%s\'"
                 + ", \'%s\');"
-                , usuario.ra, usuario.nome, usuario.login, usuario.senha, usuario.tipo);
+                , usuario.getRa(), usuario.getNome(), usuario.getLogin(), 
+                usuario.getSenha(), usuario.getTipo());
         
         try {
             connection = instance.getConnection();
@@ -90,7 +91,8 @@ public class UsuarioDAO implements DAO<Usuario> {
                 + ", SENHA = \'%s\'"
                 + ", TIPO = \'%s\'"
                 + "WHERE ID = %d"
-                , usuario.ra, usuario.nome, usuario.login, usuario.senha, usuario.tipo, usuario.id);
+                , usuario.getRa(), usuario.getNome(), usuario.getLogin(), 
+                usuario.getSenha(), usuario.getTipo());
         
         try {
             connection = instance.getConnection();
@@ -136,12 +138,12 @@ public class UsuarioDAO implements DAO<Usuario> {
         Usuario usuario = new Usuario();
         try {
             while (result.next()) {
-                usuario.id = result.getInt("ID");
-                usuario.nome = result.getString("NOME");
-                usuario.ra = result.getString("RA");
-                usuario.login = result.getString("LOGIN");
-                usuario.senha = result.getString("SENHA");
-                usuario.tipo = TipoUsuario.valueOf(result.getString("TIPO"));
+                usuario.setId(result.getInt("ID"));
+                usuario.setNome(result.getString("NOME"));
+                usuario.setRa(result.getString("RA"));
+                usuario.setLogin(result.getString("LOGIN"));
+                usuario.setSenha(result.getString("SENHA"));
+                usuario.setTipo(TipoUsuario.valueOf(result.getString("TIPO")));
             }
         }
         catch (Exception exception) {

@@ -15,7 +15,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 
 /**
  * FXML Controller class
@@ -25,6 +27,11 @@ import javafx.scene.control.Label;
 public class ADM_Relatorios_TabelasController implements Initializable {
     
     @FXML private Label lblDia;
+    @FXML private Label lblTitulo;
+    @FXML private CheckBox cbJanta;
+    @FXML private CheckBox cbLancheReforcado;
+    @FXML private TableView tableViewInfos;
+    
     
     /**
      * Initializes the controller class.
@@ -32,25 +39,23 @@ public class ADM_Relatorios_TabelasController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try{
-            SetData();            
+            //att filtros checkbox
+            cbJanta.setSelected(ADM_Relatorios_CardsController.filtroJanta);
+            cbLancheReforcado.setSelected(ADM_Relatorios_CardsController.filtroLancheReforcado);
+            lblTitulo.setText(ADM_Relatorios_CardsController.cardClicado);
+            SetData();         
+            SetTabela();
         }catch (Exception erro){
             MsgBox("Erro", "Ocorreu algo de errado. Tente reiniciar o programa.");
         }
-    }    
-    
+    }  
     
     @FXML
     private void OnClick_btnVoltar() throws IOException {
         App.setRoot("ViewADM_Relatorios_Cards");
     }
     
-    @FXML
-    private void OnClick_btnJanta() throws IOException{
-        
-    }
-    
-    @FXML
-    private void OnClick_btnLanche_Reforcado() throws IOException{
+    private void SetTabela(){
         
     }
     

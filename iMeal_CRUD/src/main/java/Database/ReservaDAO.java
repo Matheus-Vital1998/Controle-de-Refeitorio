@@ -1,6 +1,8 @@
 package Database;
 
+import Domain.Cardapio;
 import Domain.Reserva;
+import Domain.Usuario;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,9 +26,9 @@ public class ReservaDAO implements DAO<Reserva> {
                 + "%d"
                 + ", %d"
                 + ", '%s')"
-                , reserva.usuarioID
-                , reserva.cardapioID
-                , reserva.horario.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                , reserva.getUsuario().getId()
+                , reserva.getCardapio().getId()
+                , reserva.getHorario().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         
         try {
             connection = instance.getConnection();
@@ -82,10 +84,10 @@ public class ReservaDAO implements DAO<Reserva> {
                 + ", CARDAPIO_ID = %d"
                 + ", HORARIO_RESERVA = '%s'"
                 + " WHERE ID = %d"
-                , reserva.usuarioID
-                , reserva.cardapioID
-                , reserva.horario.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-                , reserva.id);
+                , reserva.getUsuario().getId()
+                , reserva.getCardapio().getId()
+                , reserva.getHorario().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                , reserva.getId());
         
         try {
             connection = instance.getConnection();
@@ -126,10 +128,17 @@ public class ReservaDAO implements DAO<Reserva> {
         Reserva reserva = new Reserva();
         try {
             while (result.next()) {
-                reserva.id = result.getInt("ID");
-                reserva.usuarioID = result.getInt("USUARIO_ID");
-                reserva.cardapioID = result.getInt("CARDAPIO_ID");
-                reserva.horario = LocalDateTime.parse(result.getString("HORARIO_RESERVA"), DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.S"));
+                reserva.setId(result.getInt("ID"));
+                
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                Usuario usuarioAux = usuarioDAO.read(result.getInt("USUARIO_ID"));
+                reserva.setUsuario(usuarioAux);
+                
+                CardapioDAO cardapioDAO = new CardapioDAO();
+                Cardapio cardapioAux = cardapioDAO.read(result.getInt("CARDAPIO_ID"));
+                reserva.setCardapio(cardapioAux);
+                
+                reserva.setHorario(LocalDateTime.parse(result.getString("HORARIO_RESERVA"), DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss.S")));
             }
         }
         catch (Exception exception) {

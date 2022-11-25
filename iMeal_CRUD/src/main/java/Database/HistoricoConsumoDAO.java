@@ -1,7 +1,12 @@
 package Database;
 
+import Domain.Cardapio;
 import Domain.HistoricoConsumo;
+import Domain.Usuario;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
     private ConnectionFactory connectionFactory;
@@ -20,11 +25,11 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
                 + ", '%s'"
                 + ", %d"
                 + ", '%s'"
-                , historicoConsumo.usuarioID
-                , historicoConsumo.cardapioID
-                , historicoConsumo.horarioChegada
-                , historicoConsumo.entradaAutorizada
-                , historicoConsumo.motivo);
+                , historicoConsumo.getUsuario().getId()
+                , historicoConsumo.getCardapio().getId()
+                , historicoConsumo.getHorarioChegada()
+                , historicoConsumo.getEntradaAutorizada()
+                , historicoConsumo.getMotivo());
         
         Connection connection = connectionFactory.getConnection();
         Statement statement = connection.createStatement();
@@ -55,11 +60,11 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
                 + ", HORARIO_CHEGADA = '%s'"
                 + ", ENTRADA_AUTORIZADA = %d"
                 + ", MOTIVO = '%s'"
-                , historicoConsumo.usuarioID
-                , historicoConsumo.cardapioID
-                , historicoConsumo.horarioChegada
-                , historicoConsumo.entradaAutorizada
-                , historicoConsumo.motivo);
+                , historicoConsumo.getUsuario().getId()
+                , historicoConsumo.getCardapio().getId()
+                , historicoConsumo.getHorarioChegada()
+                , historicoConsumo.getEntradaAutorizada()
+                , historicoConsumo.getMotivo());
         
         Connection connection = connectionFactory.getConnection();
         Statement statement = connection.createStatement();
@@ -78,6 +83,30 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
     }
 
     private HistoricoConsumo deserialize(ResultSet result){
-        return null;
+        HistoricoConsumo historicoConsumo = new HistoricoConsumo();
+        try {
+            while (result.next()) {
+                historicoConsumo.setId(result.getInt("ID"));
+                
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                Usuario usuarioAux = usuarioDAO.read(result.getInt("USUARIO_ID"));
+                historicoConsumo.setUsuario(usuarioAux);
+                
+                CardapioDAO cardapioDAO = new CardapioDAO();
+                Cardapio cardapioAux = cardapioDAO.read(result.getInt("CARDAPIO_ID"));
+                historicoConsumo.setCardapio(cardapioAux);
+                
+                historicoConsumo.setHorarioChegada(LocalTime.parse(result.getString("HORARIO_CHEGADA"), DateTimeFormatter.ofPattern("HH:mm:ss.S")));
+                
+                historicoConsumo.setEntradaAutorizada(result.getBoolean("ENTRADA_AUTORIZADA"));
+                
+                historicoConsumo.setMotivo(result.getString("MOTIVO"));
+            }
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+
+        return historicoConsumo;
     }
 }

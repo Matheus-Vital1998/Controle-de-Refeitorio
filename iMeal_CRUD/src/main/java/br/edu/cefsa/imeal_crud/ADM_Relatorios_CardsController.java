@@ -4,7 +4,6 @@
  */
 package br.edu.cefsa.imeal_crud;
 
-import static br.edu.cefsa.imeal_crud.ADM_RelatoriosController.dataEscolhida;
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
@@ -16,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 
 /**
@@ -30,6 +30,12 @@ public class ADM_Relatorios_CardsController implements Initializable {
     @FXML private Label lblBopLeft;
     @FXML private Label lblBotRight;
     @FXML private Label lblDia;
+    @FXML private CheckBox cbJanta;
+    @FXML private CheckBox cbLancheReforcado;
+    public static String cardClicado;
+    public static Boolean filtroJanta;
+    public static Boolean filtroLancheReforcado;
+    
     
     /**
      * Initializes the controller class.
@@ -37,12 +43,20 @@ public class ADM_Relatorios_CardsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try{
-            SetData();            
+            cardClicado = null;
+            
+            if (filtroJanta != null) {
+                cbJanta.setSelected(filtroJanta);            }
+            if (filtroLancheReforcado != null) {
+                cbLancheReforcado.setSelected(filtroLancheReforcado);
+            }
+            SetData();        
+            
+            //Falta setar os valores dos cards (very important)
         }catch (Exception erro){
             MsgBox("Erro", "Ocorreu algo de errado. Tente reiniciar o programa.");
         }
-    }    
-    
+    }   
     
     @FXML
     private void OnClick_btnVoltar() throws IOException {
@@ -50,39 +64,31 @@ public class ADM_Relatorios_CardsController implements Initializable {
     }
     
     @FXML
-    private void OnClick_btnTopLeft() throws IOException{
-        
+    private void SetAndGoToTabela(String cardClicadoVar) throws IOException{
+        cardClicado = cardClicadoVar;
+        filtroJanta = cbJanta.isSelected();
+        filtroLancheReforcado = cbLancheReforcado.isSelected();
         App.setRoot("ViewADM_Relatorios_Tabelas");
+    }
+    
+    @FXML
+    private void OnClick_btnTopLeft() throws IOException{
+        SetAndGoToTabela("Tabela de todos os alunos que compareceram");
     }
     
     @FXML
     private void OnClick_btnTopRight() throws IOException{
-        
-        App.setRoot("ViewADM_Relatorios_Tabelas");
+        SetAndGoToTabela("Tabela de todos os alunos que reservaram suas entradas e não compareceram");
     }
     
     @FXML
     private void OnClick_btnBotLeft() throws IOException{
-        
-        App.setRoot("ViewADM_Relatorios_Tabelas");
+        SetAndGoToTabela("Tabela de todas as tentativas de entrada sem agendamento");
     }
     
     @FXML
     private void OnClick_btnBotRight() throws IOException{
-        
-        App.setRoot("ViewADM_Relatorios_Tabelas");
-    }
-    
-    @FXML
-    private void OnClick_btnJanta() throws IOException{
-        
-        App.setRoot("ViewADM_Relatorios_Tabelas");
-    }
-    
-    @FXML
-    private void OnClick_btnLanche_Reforcado() throws IOException{
-        
-        App.setRoot("ViewADM_Relatorios_Tabelas");
+        SetAndGoToTabela("Tabela de todas as tentativas de entrar mais de uma vez na mesma refeição");
     }
     
     private String FormataDia(LocalDate date){
