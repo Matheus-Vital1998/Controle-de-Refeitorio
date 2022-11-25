@@ -28,7 +28,7 @@
                <children>
                   <Pane layoutX="632.0" prefHeight="434.0" prefWidth="161.0" style="-fx-border-color: black;">
                      <children>
-                        <Label fx:id="lblDia" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="161.0" style="-fx-border-color: black;" text="XX/XX/XXXX" textAlignment="CENTER" />
+                        <Label fx:id="lblDia" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="161.0" style="-fx-border-color: black;" text="XX/XX/XXXX" textAlignment="CENTER" wrapText="true" />
                         <Button disable="true" layoutX="27.0" layoutY="86.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Café-da-manhã" />
                         <Button disable="true" layoutX="27.0" layoutY="121.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Almoço" />
                         <Button disable="true" layoutX="27.0" layoutY="156.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Lanche" />

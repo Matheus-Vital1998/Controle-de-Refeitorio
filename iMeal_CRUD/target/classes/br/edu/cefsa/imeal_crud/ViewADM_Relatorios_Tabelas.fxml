@@ -3,10 +3,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="501.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.cefsa.imeal_crud.ADM_Relatorios_TabelasController">
    <children>
@@ -27,7 +30,7 @@
                <children>
                   <Pane layoutX="632.0" prefHeight="434.0" prefWidth="161.0" style="-fx-border-color: black;">
                      <children>
-                        <Label fx:id="lblDia" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="161.0" style="-fx-border-color: black;" text="XX/XX/XXXX" textAlignment="CENTER" />
+                        <Label fx:id="lblDia" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="161.0" style="-fx-border-color: black;" text="XX/XX/XXXX" textAlignment="CENTER" wrapText="true" />
                         <Button disable="true" layoutX="27.0" layoutY="86.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Café-da-manhã" />
                         <Button disable="true" layoutX="27.0" layoutY="121.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Almoço" />
                         <Button disable="true" layoutX="27.0" layoutY="156.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Lanche" />
@@ -36,7 +39,20 @@
                         <Pane layoutY="300.0" prefHeight="134.0" prefWidth="161.0" style="-fx-border-color: black;" />
                      </children>
                   </Pane>
-                  <Pane layoutX="7.0" prefHeight="434.0" prefWidth="624.0" />
+                  <Pane layoutX="7.0" prefHeight="434.0" prefWidth="624.0">
+                     <children>
+                        <TableView fx:id="tableView" layoutY="41.0" prefHeight="393.0" prefWidth="624.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                        <Label prefHeight="40.0" prefWidth="597.0" text="Quantidade total de alunos que reservaram suas entradas e não compareceram" wrapText="true">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                     </children></Pane>
                </children></AnchorPane>
         </items>
       </SplitPane>
