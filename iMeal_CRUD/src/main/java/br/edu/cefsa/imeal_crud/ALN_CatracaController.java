@@ -63,7 +63,6 @@ public class ALN_CatracaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         App.stageIni.setHeight(610);
         changeVisor("Visor_Aguardando");
-        REMOVER();
     }
 
     private void changeVisor(String nameImgVisor) {
@@ -94,9 +93,9 @@ public class ALN_CatracaController implements Initializable {
 
             if (horarioEscolhido != null) {
                 if (diaEscolhido != null) {
-                    REMOVER();
-//                  cardapioEscolhido = findCardapio(horarioEscolhido, diaEscolhido);
-//                  reservaAtual = findReserva(); 
+                  cardapioEscolhido = findCardapio(horarioEscolhido, diaEscolhido);
+                  reservaAtual = findReserva(); 
+                  
                 } else {
                     valid = false;
                 }
@@ -212,28 +211,6 @@ public class ALN_CatracaController implements Initializable {
         } else {
             return 1;
         }
-    }
-
-    private void REMOVER() {
-        LoginController.usuarioAtual = new Usuario(1, "081200024", "Matheus Vinicius Miranda Brito", "aluno@aluno", "aluno1234", TipoUsuario.ALUNO);
-        cardapioEscolhido = new Cardapio(1,
-                new Refeicao(1,
-                        "Janta",
-                        LocalTime.MIDNIGHT,
-                        LocalTime.NOON,
-                        LocalTime.MIDNIGHT),
-                LocalDate.MAX,
-                "Feijoada");
-
-        cardapioEscolhido = new Cardapio(1,
-                new Refeicao(1, "Janta", LocalTime.of(18, 15), LocalTime.of(19, 05), LocalTime.of(17, 00)),
-                LocalDate.of(2022, 11, 25),
-                "Feijoada");
-
-        reservaAtual = new Reserva(1,
-                LoginController.usuarioAtual,
-                cardapioEscolhido,
-                LocalDateTime.of(2022, 11, 25, 13, 01, 59));
     }
 
     private Cardapio findCardapio(LocalTime horarioTentativa, LocalDate diaTentativa) {
