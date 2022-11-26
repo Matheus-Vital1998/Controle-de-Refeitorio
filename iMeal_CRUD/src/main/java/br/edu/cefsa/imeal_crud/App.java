@@ -15,10 +15,12 @@ import javafx.scene.image.Image;
 public class App extends Application {
 
     private static Scene scene;
+    public static Stage stageIni;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("ViewLogin"), 640, 480);
+        stageIni = stage;
+        scene = new Scene(loadFXML("ViewALN_Cardapio_Semanal"), 640, 480);
         stage.getIcons().add(new Image("/imgs/iMeal_Logo_Oficial_2.png"));
         stage.setTitle("iMeal");
         stage.setWidth(804);

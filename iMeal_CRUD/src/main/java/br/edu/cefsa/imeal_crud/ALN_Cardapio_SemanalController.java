@@ -86,6 +86,11 @@ public class ALN_Cardapio_SemanalController implements Initializable {
         App.setRoot("ViewLogin");
     }
 
+    @FXML
+    private void OnClick_btnCatraca() throws IOException {
+        App.setRoot("ViewALN_Catraca");
+    }
+            
     private void MsgErro(String msg) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Erro");
