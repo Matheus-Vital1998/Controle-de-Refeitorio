@@ -81,9 +81,12 @@ public class ALN_ReservaController implements Initializable {
     @FXML
     private void OnClick_btnConfirmar() throws IOException {
         try {
-            if(reservaFeita){
+            if (reservaFeita) {
                 int resp = MsgBox("Confirmação", "Salvar as alterações feitas?");
                 if (resp == 0) {
+                    if (reservaAtual == null) {
+                        reservaAtual = new Reserva();
+                    }
                     if (reservaAtual.getId() == null) {
                         reservaAtual.setUsuario(LoginController.usuarioAtual);
                         reservaAtual.setCardapio(cardapioDAO.read(ALN_Cardapio_SemanalController.dataEscolhida,
@@ -94,12 +97,19 @@ public class ALN_ReservaController implements Initializable {
                         return;
                     }
 
+                    //Não permite reservar se não tiver cardapio criado
+                    if (reservaAtual.getCardapio().getId() == null) {
+                        MsgBox("Inválido", "Cardápio ainda não criado.");
+                        App.setRoot("ViewALN_Cardapio_Semanal");
+                        return;
+                    }
+
                     reservaDAO.create(reservaAtual);
 
                     App.setRoot("ViewALN_Cardapio_Semanal");
                     MsgBox("Sucesso", "Salvamento confirmado.");
                 }
-            } else{
+            } else {
                 int resp = MsgBox("Confirmação", "Deseja mesmo desfazer sua reserva?");
                 if (resp == 0) {
                     if (reservaAtual.getId() == null) {
