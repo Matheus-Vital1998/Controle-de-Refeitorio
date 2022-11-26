@@ -101,7 +101,7 @@ INSERT INTO iMeal.USUARIO (RA,NOME,LOGIN,SENHA,TIPO) VALUES
     
 INSERT INTO iMeal.REFEICAO (NOME, HORARIO_INICIO, HORARIO_FIM, HORARIO_LIMITE_RESERVA) VALUES
     ('Janta',    '18:15',    '19:05',    '17:00'),
-    ('Lanche Reforçado',    '20:50',    '21:05',    '19:50')
+    ('Lanche reforçado',    '20:50',    '21:05',    '19:50')
 
 INSERT INTO CARDAPIO (REFEICAO_ID, DATA, DESCRICAO) VALUES 
 	(1, '2022-11-25', 'Feijoada'),

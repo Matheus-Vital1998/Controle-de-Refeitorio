@@ -49,7 +49,7 @@ public class ALN_Cardapio_SemanalController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        refeicaoDAO = new RefeicaoDAO();
         dataEscolhida = LocalDate.now();
         diasDaSemana = getDiasDaSemana(dataEscolhida);
 
@@ -60,7 +60,7 @@ public class ALN_Cardapio_SemanalController implements Initializable {
         lblDiaSexta.setText(diasDaSemana[4].format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
-private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
+    private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
         //0 - Seg, 1 - Ter, ..., 6 - Dom
         Integer diaDaSemanaAtual = DayOfWeek.from(dataAtual).getValue() - 1;
 

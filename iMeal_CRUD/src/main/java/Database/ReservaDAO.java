@@ -28,7 +28,7 @@ public class ReservaDAO implements DAO<Reserva> {
                 + ", '%s')"
                 , reserva.getUsuario().getId()
                 , reserva.getCardapio().getId()
-                , reserva.getHorario().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                , reserva.getHorario().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replaceAll("T"," "));
         
         try {
             connection = instance.getConnection();
@@ -53,6 +53,33 @@ public class ReservaDAO implements DAO<Reserva> {
 
         String sql = 
             "SELECT * FROM RESERVA WHERE ID = " + id;
+
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            reserva = deserialize(result);
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { result.close(); } catch (Exception exception) {/* Ignored */}
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
+        
+        return reserva;
+    }
+    public Reserva read(Usuario usuario, Cardapio cardapio) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        Reserva reserva = null;
+
+        String sql = 
+            "SELECT * FROM RESERVA WHERE USUARIO_ID = " + usuario.getId() 
+                + " And CARDAPIO_ID = " + cardapio.getId();
 
         try {
             connection = instance.getConnection();

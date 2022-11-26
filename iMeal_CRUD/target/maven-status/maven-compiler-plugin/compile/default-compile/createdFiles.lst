@@ -11,6 +11,7 @@ Database\ConnectionFactory.class
 br\edu\cefsa\imeal_crud\ALN_ReservaController.class
 br\edu\cefsa\imeal_crud\LoginController.class
 br\edu\cefsa\imeal_crud\ADM_RelatoriosController.class
+Domain\HistoricoConsumoLimitado.class
 br\edu\cefsa\imeal_crud\ADM_CRUD_CardapioController.class
 Database\DAO.class
 br\edu\cefsa\imeal_crud\App.class

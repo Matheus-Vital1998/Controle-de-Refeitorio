@@ -37,10 +37,6 @@ public class ADM_CRUD_CardapioController implements Initializable {
     private TextArea txtDescricao;
     @FXML
     private Button btnExcluir;
-    @FXML
-    private Button btnSalvar;
-    @FXML
-    private Button btnCancelar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

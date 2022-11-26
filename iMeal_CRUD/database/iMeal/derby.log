@@ -1,0 +1,14 @@
+Fri Nov 25 21:23:38 GMT-03:00 2022 : Apache Derby Servidor de Rede - 10.10.2.0 - (1582446) iniciado e pronto para aceitar conexões na porta 1527 em {3}
+----------------------------------------------------------------
+Fri Nov 25 21:23:39 GMT-03:00 2022:
+ Inicializando o Derby versão The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instância a816c00e-0184-b151-7e6e-00002a842f07
+no diretório de banco de dados Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\database\iMeal\iMeal 
+
+java.vendor=Oracle Corporation
+java.runtime.version=17.0.1+12-LTS-39
+user.dir=C:\Server\Apache Derby\db-derby-10.10.2.0-bin
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\database\iMeal
+Carregador de classe do banco de dados iniciado - derby.database.classpath=''
