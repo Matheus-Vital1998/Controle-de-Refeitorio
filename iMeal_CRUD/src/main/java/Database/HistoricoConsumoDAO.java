@@ -51,6 +51,19 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
         
         return deserialize(result);
     }
+    
+    public List<HistoricoConsumoLimitado> read(Usuario usuario, Cardapio cardapio) throws Exception {
+        String sql = 
+            "SELECT * FROM HISTORICO_CONSUMO WHERE USUARIO_ID = " + usuario.getId() 
+                + " And CARDAPIO_ID = " + cardapio.getId();
+
+        Connection connection = connectionFactory.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery(sql);
+        connection.close();
+        
+        return limitedDeserialize(result);
+    }
 
     @Override
     public void update(HistoricoConsumo historicoConsumo) throws Exception {

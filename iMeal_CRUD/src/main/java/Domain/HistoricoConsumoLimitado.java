@@ -10,6 +10,7 @@ import java.time.LocalTime;
 /**
  *
  * @author Matheus
+ * Criado para preencher a tabela do relatório
  */
 public class HistoricoConsumoLimitado {    
     private String ra;
