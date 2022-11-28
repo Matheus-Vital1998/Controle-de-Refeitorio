@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -100,8 +101,22 @@ public class ALN_Cardapio_SemanalController implements Initializable {
             alert.close();
         }
     }
+    
+    private Integer MsgBox(String titulo, String msg) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(msg);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            alert.close();
+            return 0;
+        } else {
+            return 1;
+        }
+    }
 
-    private void RefeicaoEscolhida(String nome_refeicao, String dia_da_semana) {
+    private Boolean RefeicaoEscolhida(String nome_refeicao, String dia_da_semana) {
+        Boolean valid = true;
         try {
             //Refeição
             if (nome_refeicao == "Janta") {
@@ -110,6 +125,13 @@ public class ALN_Cardapio_SemanalController implements Initializable {
                 refeicaoEscolhida = refeicaoDAO.read("Lanche reforçado");
             } else {
                 MsgErro("Ocorreu algo de errado. Tente reiniciar o programa.");
+                valid = false;
+            }
+            
+            if (refeicaoEscolhida.getHorarioLimiteReserva().isAfter(LocalTime.now())){
+                MsgBox("Inválido","Horário limite de reserva da refeição excedido!\nHorário limite: "+
+                        refeicaoEscolhida.getHorarioLimiteReserva());
+                valid = false;
             }
 
             //Dia
@@ -130,70 +152,72 @@ public class ALN_Cardapio_SemanalController implements Initializable {
                 dataEscolhida = diasDaSemana[4];
             } else {
                 MsgErro("Ocorreu algo de errado. Tente reiniciar o programa.");
+                valid = false;
             }
         } catch (Exception erro) {
-            MsgErro("Ocorreu algo de errado. Tente reiniciar o programa.");
+            valid = false;
         }
+        return valid;
     }
 
     //Vai para a tela de reserva, levando o valor de janta consigo
     @FXML
     private void OnClick_Seg_Janta() throws IOException {
-        RefeicaoEscolhida("Janta", "Segunda");
-        App.setRoot("ViewALN_Reserva");
+        if(RefeicaoEscolhida("Janta", "Segunda")){
+            App.setRoot("ViewALN_Reserva");}
     }
 
     @FXML
     private void OnClick_Ter_Janta() throws IOException {
-        RefeicaoEscolhida("Janta", "Terça");
-        App.setRoot("ViewALN_Reserva");
+        if(RefeicaoEscolhida("Janta", "Terça")){
+        App.setRoot("ViewALN_Reserva");}
     }
 
     @FXML
     private void OnClick_Qua_Janta() throws IOException {
-        RefeicaoEscolhida("Janta", "Quarta");
-        App.setRoot("ViewALN_Reserva");
+        if(RefeicaoEscolhida("Janta", "Quarta")){
+        App.setRoot("ViewALN_Reserva");}
     }
 
     @FXML
     private void OnClick_Qui_Janta() throws IOException {
-        RefeicaoEscolhida("Janta", "Quinta");
-        App.setRoot("ViewALN_Reserva");
+        if(RefeicaoEscolhida("Janta", "Quinta")){
+        App.setRoot("ViewALN_Reserva");}
     }
 
     @FXML
     private void OnClick_Sex_Janta() throws IOException {
-        RefeicaoEscolhida("Janta", "Sexta");
-        App.setRoot("ViewALN_Reserva");
+        if(RefeicaoEscolhida("Janta", "Sexta")){
+        App.setRoot("ViewALN_Reserva");}
     }
 
     @FXML
     private void OnClick_Seg_Lanche_Reforcado() throws IOException {
-        RefeicaoEscolhida("Lanche reforçado", "Segunda");
-        App.setRoot("ViewALN_Reserva");
+        if(RefeicaoEscolhida("Lanche reforçado", "Segunda")){
+        App.setRoot("ViewALN_Reserva");}
     }
 
     @FXML
     private void OnClick_Ter_Lanche_Reforcado() throws IOException {
-        RefeicaoEscolhida("Lanche reforçado", "Terça");
-        App.setRoot("ViewALN_Reserva");
+        if(RefeicaoEscolhida("Lanche reforçado", "Terça")){
+        App.setRoot("ViewALN_Reserva");}
     }
 
     @FXML
     private void OnClick_Qua_Lanche_Reforcado() throws IOException {
-        RefeicaoEscolhida("Lanche reforçado", "Quarta");
-        App.setRoot("ViewALN_Reserva");
+        if(RefeicaoEscolhida("Lanche reforçado", "Quarta")){
+        App.setRoot("ViewALN_Reserva");}
     }
 
     @FXML
     private void OnClick_Qui_Lanche_Reforcado() throws IOException {
-        RefeicaoEscolhida("Lanche reforçado", "Quinta");
-        App.setRoot("ViewALN_Reserva");
+        if(RefeicaoEscolhida("Lanche reforçado", "Quinta")){
+        App.setRoot("ViewALN_Reserva");}
     }
 
     @FXML
     private void OnClick_Sex_Lanche_Reforcado() throws IOException {
-        RefeicaoEscolhida("Lanche reforçado", "Sexta");
-        App.setRoot("ViewALN_Reserva");
+        if(RefeicaoEscolhida("Lanche reforçado", "Sexta")){
+        App.setRoot("ViewALN_Reserva");}
     }
 }
