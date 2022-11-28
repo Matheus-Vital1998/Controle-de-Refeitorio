@@ -47,30 +47,57 @@ public class ALN_ReservaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cardapioEscolhido = new Cardapio();
-        cardapioEscolhido = cardapioDAO.read(ALN_Cardapio_SemanalController.dataEscolhida,
-                ALN_Cardapio_SemanalController.refeicaoEscolhida.getId());
-        reservaAtual = reservaDAO.read(LoginController.usuarioAtual, cardapioEscolhido);
+        try {
+            cardapioEscolhido = new Cardapio();
+            Integer idRefeicao = ALN_Cardapio_SemanalController.refeicaoEscolhida.getId();
 
-        if (!(cardapioEscolhido.getDescricao() == null || cardapioEscolhido.getDescricao().matches(""))) {
-            txtDescricao.setText(cardapioEscolhido.getDescricao());
+            cardapioEscolhido = cardapioDAO.read(ALN_Cardapio_SemanalController.dataEscolhida,
+                    idRefeicao);
+            reservaAtual = reservaDAO.read(LoginController.usuarioAtual, cardapioEscolhido);
+
+            if (!(cardapioEscolhido.getDescricao() == null || cardapioEscolhido.getDescricao().matches(""))) {
+                txtDescricao.setText(cardapioEscolhido.getDescricao());
+            }
+
+            String tituloTela = "";
+            reservaFeita = (reservaAtual == null || reservaAtual.getId() == null);
+            if (reservaFeita) {
+                tituloTela = "Fazer reserva";
+            } else {
+                tituloTela = "Editar reserva";
+                lblConfirmarIda.setText("Desfazer reserva à refeição?");
+                btnConfirmar.setText("Desfazer");
+            }
+
+            tituloTela += ": " + ALN_Cardapio_SemanalController.refeicaoEscolhida.getNome() + " de "
+                    + ALN_Cardapio_SemanalController.diaDaSemanaEscolhido + " - "
+                    + ALN_Cardapio_SemanalController.dataEscolhida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+            lblTitulo.setText(tituloTela);
+
+            //Verifica se a outra refeição do dia não está reservada, se sim, nega a entrada
+            
+            Integer idOutraRefeicaoDoDia = 0;
+            if (idRefeicao == 1) {
+                idOutraRefeicaoDoDia = 2;
+            } else if (idRefeicao == 2) {
+                idOutraRefeicaoDoDia = 1;
+            } else {
+                //?????
+            }
+
+            Cardapio outroCardapioDoDia = cardapioDAO.read(ALN_Cardapio_SemanalController.dataEscolhida,
+                    idOutraRefeicaoDoDia);
+            Reserva outraReservaDoDia = reservaDAO.read(LoginController.usuarioAtual, outroCardapioDoDia);
+
+            if (outraReservaDoDia.getId() == null) {
+                MsgBox("Inválido", "Você só pode reservar uma das refeições do dia!");
+                App.setRoot("ViewALN_Cardapio_Semanal");
+            }
+
+        } catch (Exception erro) {
+            MsgBox("Erro", "Ocorreu algo de errado. Tente reiniciar o programa.");
         }
-
-        String tituloTela = "";
-        reservaFeita = (reservaAtual == null || reservaAtual.getId() == null);
-        if (reservaFeita) {
-            tituloTela = "Fazer reserva";
-        } else {
-            tituloTela = "Editar reserva";
-            lblConfirmarIda.setText("Desfazer reserva à refeição?");
-            btnConfirmar.setText("Desfazer");
-        }
-
-        tituloTela += ": " + ALN_Cardapio_SemanalController.refeicaoEscolhida.getNome() + " de "
-                + ALN_Cardapio_SemanalController.diaDaSemanaEscolhido + " - "
-                + ALN_Cardapio_SemanalController.dataEscolhida.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-        lblTitulo.setText(tituloTela);
     }
 
     @FXML

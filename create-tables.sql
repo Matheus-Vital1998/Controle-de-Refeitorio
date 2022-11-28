@@ -131,12 +131,16 @@ CREATE VIEW vw_Compareceram AS
 	SELECT * FROM HISTORICO_CONSUMO WHERE ENTRADA_AUTORIZADA = TRUE
 
 CREATE VIEW vw_NaoCompareceram AS
-	SELECT * FROM HISTORICO_CONSUMO WHERE MOTIVO = 'Tentou entrar mais de uma vez na mesma refeição'
+	SELECT * FROM HISTORICO_CONSUMO WHERE MOTIVO = 'Reservou e não compareceu'
 
-CREATE VIEW vw_AlunosCompareceram AS
+CREATE VIEW vw_TentouEntrarSemAgendar AS
 	SELECT * FROM HISTORICO_CONSUMO WHERE MOTIVO = 'Não agendou e tentou entrar'
 
-CREATE VIEW vw_AlunosCompareceram AS
-	SELECT * FROM HISTORICO_CONSUMO WHERE MOTIVO = 'Reservou e não compareceu'
+CREATE VIEW vw_TentouEntrarDenovo AS
+	SELECT * FROM HISTORICO_CONSUMO WHERE MOTIVO = 'Tentou entrar mais de uma vez na mesma refeição'
+
+
+
+
 	
 

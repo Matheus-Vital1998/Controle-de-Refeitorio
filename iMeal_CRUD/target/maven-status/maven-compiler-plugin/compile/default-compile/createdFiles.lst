@@ -1,6 +1,7 @@
 br\edu\cefsa\imeal_crud\ADM_Criar_Conta_AdminController.class
 Database\RefeicaoDAO.class
 br\edu\cefsa\imeal_crud\ADM_InicialController.class
+br\edu\cefsa\imeal_crud\ALN_CatracaController.class
 br\edu\cefsa\imeal_crud\ADM_Relatorios_TabelasController.class
 Domain\Cardapio.class
 Domain\TipoUsuario.class

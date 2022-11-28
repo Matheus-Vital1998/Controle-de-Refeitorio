@@ -4,6 +4,9 @@
  */
 package br.edu.cefsa.imeal_crud;
 
+import Database.CardapioDAO;
+import Database.HistoricoConsumoDAO;
+import Domain.Cardapio;
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
@@ -24,73 +27,92 @@ import javafx.scene.control.Label;
  * @author Matheus
  */
 public class ADM_Relatorios_CardsController implements Initializable {
-    
-    @FXML private Label lblTopLeft;
-    @FXML private Label lblTopRight;
-    @FXML private Label lblBopLeft;
-    @FXML private Label lblBotRight;
-    @FXML private Label lblDia;
-    @FXML private CheckBox cbJanta;
-    @FXML private CheckBox cbLancheReforcado;
+
+    @FXML
+    private Label lblTopLeft;
+    @FXML
+    private Label lblTopRight;
+    @FXML
+    private Label lblBopLeft;
+    @FXML
+    private Label lblBotRight;
+    @FXML
+    private Label lblDia;
+    @FXML
+    private CheckBox cbJanta;
+    @FXML
+    private CheckBox cbLancheReforcado;
     public static String cardClicado;
     public static Boolean filtroJanta;
     public static Boolean filtroLancheReforcado;
-    
-    
+    private static HistoricoConsumoDAO historicoConsumoDAO;
+    private static CardapioDAO cardapioDAO;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try{
+        try {
             cardClicado = null;
-            
+
             SetFiltroRefeicao();
-            SetData();        
-            
+            SetData();
+            SetCards();
+
             //Falta setar os valores dos cards (very important)
-        }catch (Exception erro){
+        } catch (Exception erro) {
             MsgBox("Erro", "Ocorreu algo de errado. Tente reiniciar o programa.");
         }
-    }   
-    
+    }
+
     @FXML
     private void OnClick_btnVoltar() throws IOException {
         App.setRoot("ViewADM_Relatorios");
     }
-    
+
     @FXML
-    private void SetAndGoToTabela(String cardClicadoVar) throws IOException{
+    private void OnChange_FiltroRefeicao() throws IOException {
+        try {
+            SetFiltroRefeicao();
+            SetCards();
+        } catch(Exception erro){
+            MsgBox("Erro", "Ocorreu algo de errado. Tente reiniciar o programa.");
+        }
+    }
+
+    @FXML
+    private void SetAndGoToTabela(String cardClicadoVar) throws IOException {
         cardClicado = cardClicadoVar;
         filtroJanta = cbJanta.isSelected();
         filtroLancheReforcado = cbLancheReforcado.isSelected();
         App.setRoot("ViewADM_Relatorios_Tabelas");
     }
-    
+
     @FXML
-    private void OnClick_btnTopLeft() throws IOException{
+    private void OnClick_btnTopLeft() throws IOException {
         SetAndGoToTabela("Tabela de todos os alunos que compareceram");
     }
-    
+
     @FXML
-    private void OnClick_btnTopRight() throws IOException{
+    private void OnClick_btnTopRight() throws IOException {
         SetAndGoToTabela("Tabela de todos os alunos que reservaram suas entradas e não compareceram");
     }
-    
+
     @FXML
-    private void OnClick_btnBotLeft() throws IOException{
+    private void OnClick_btnBotLeft() throws IOException {
         SetAndGoToTabela("Tabela de todas as tentativas de entrada sem agendamento");
     }
-    
+
     @FXML
-    private void OnClick_btnBotRight() throws IOException{
+    private void OnClick_btnBotRight() throws IOException {
         SetAndGoToTabela("Tabela de todas as tentativas de entrar mais de uma vez na mesma refeição");
     }
-    
-    private String FormataDia(LocalDate date){
+
+    private String FormataDia(LocalDate date) {
         return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
-    
+
     private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
         //0 - Seg, 1 - Ter, ..., 6 - Dom
         Integer diaDaSemanaAtual = DayOfWeek.from(dataAtual).getValue() - 1;
@@ -104,44 +126,61 @@ public class ADM_Relatorios_CardsController implements Initializable {
             diasDaSemana[0] = dataAtual.minusDays(diaDaSemanaAtual + 7);
             diaDaSemanaAtual = DayOfWeek.from(dataAtual).getValue() - 1;
         }
-        
-        for(int i = 1; i<7; i++){     
+
+        for (int i = 1; i < 7; i++) {
             diasDaSemana[i] = diasDaSemana[0].plusDays(i);
         }
 
         return diasDaSemana;
     }
-    
-    private String FormataSemana(LocalDate date){
-        LocalDate[] diasDaSemana = getDiasDaSemana(date); 
+
+    private String FormataSemana(LocalDate date) {
+        LocalDate[] diasDaSemana = getDiasDaSemana(date);
         return diasDaSemana[0].format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                 + " - "
                 + diasDaSemana[4].format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
-    
-    private void SetData(){  
-        if (ADM_RelatoriosController.tipoRelatorio == "Diario"){
+
+    private void SetData() {
+        if (ADM_RelatoriosController.tipoRelatorio == "Diario") {
             lblDia.setText(FormataDia(ADM_RelatoriosController.dataEscolhida[0]));
-        } else if(ADM_RelatoriosController.tipoRelatorio == "Semanal"){
+        } else if (ADM_RelatoriosController.tipoRelatorio == "Semanal") {
             lblDia.setText(FormataSemana(ADM_RelatoriosController.dataEscolhida[0]));
-        }else{
+        } else {
             MsgBox("Erro", "Tipo de relatório inválido. Tente reiniciar o programa.");
         }
     }
-    
-    private void SetFiltroRefeicao(){
+
+    private void SetFiltroRefeicao() {
         if (filtroJanta != null) {
             cbJanta.setSelected(filtroJanta);
-        } else{
+        } else {
             filtroJanta = cbJanta.isSelected();
         }
         if (filtroLancheReforcado != null) {
             cbLancheReforcado.setSelected(filtroLancheReforcado);
-        }else{
+        } else {
             filtroLancheReforcado = cbLancheReforcado.isSelected();
         }
     }
-    
+
+    private void SetCards() throws Exception {
+        Cardapio cardapioAux = cardapioDAO.read(LocalDate.MAX);
+
+        lblTopLeft.setText(Integer.toString((historicoConsumoDAO.readVw_Compareceram(
+                LoginController.usuarioAtual.getId(),
+                cardapioAux.getId())).size()));
+        lblTopRight.setText(Integer.toString((historicoConsumoDAO.readVw_Compareceram(
+                LoginController.usuarioAtual.getId(),
+                cardapioAux.getId())).size()));
+        lblBopLeft.setText(Integer.toString((historicoConsumoDAO.readVw_Compareceram(
+                LoginController.usuarioAtual.getId(),
+                cardapioAux.getId())).size()));
+        lblBotRight.setText(Integer.toString((historicoConsumoDAO.readVw_Compareceram(
+                LoginController.usuarioAtual.getId(),
+                cardapioAux.getId())).size()));
+    }
+
     private Integer MsgBox(String titulo, String msg) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(titulo);
