@@ -33,7 +33,7 @@ public class ADM_Relatorios_CardsController implements Initializable {
     @FXML
     private Label lblTopRight;
     @FXML
-    private Label lblBopLeft;
+    private Label lblBotLeft;
     @FXML
     private Label lblBotRight;
     @FXML
@@ -173,7 +173,7 @@ public class ADM_Relatorios_CardsController implements Initializable {
         lblTopRight.setText(Integer.toString((historicoConsumoDAO.readVw_Compareceram(
                 LoginController.usuarioAtual.getId(),
                 cardapioAux.getId())).size()));
-        lblBopLeft.setText(Integer.toString((historicoConsumoDAO.readVw_Compareceram(
+        lblBotLeft.setText(Integer.toString((historicoConsumoDAO.readVw_Compareceram(
                 LoginController.usuarioAtual.getId(),
                 cardapioAux.getId())).size()));
         lblBotRight.setText(Integer.toString((historicoConsumoDAO.readVw_Compareceram(
