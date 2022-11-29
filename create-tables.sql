@@ -74,7 +74,7 @@ CREATE TABLE HISTORICO_CONSUMO (
 	ID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 	USUARIO_ID INT NOT NULL,
 	CARDAPIO_ID INT NOT NULL,
-	HORARIO_CHEGADA TIMESTAMP,
+	HORARIO_CHEGADA TIME,
 	ENTRADA_AUTORIZADA BOOLEAN NOT NULL,
 	MOTIVO VARCHAR(50)
 );
@@ -101,7 +101,7 @@ INSERT INTO iMeal.USUARIO (RA,NOME,LOGIN,SENHA,TIPO) VALUES
     
 INSERT INTO iMeal.REFEICAO (NOME, HORARIO_INICIO, HORARIO_FIM, HORARIO_LIMITE_RESERVA) VALUES
     ('Janta',    '18:15',    '19:05',    '17:00'),
-    ('Lanche Reforçado',    '20:50',    '21:05',    '19:50')
+    ('Lanche reforçado',    '20:50',    '21:05',    '19:50')
 
 INSERT INTO CARDAPIO (REFEICAO_ID, DATA, DESCRICAO) VALUES 
 	(1, '2022-11-28', 'Cozido a brasileira'),
@@ -120,10 +120,10 @@ INSERT INTO RESERVA (USUARIO_ID, CARDAPIO_ID, HORARIO_RESERVA) VALUES
 	(1, 8, '2022-12-01 13:03:20')
 
 INSERT INTO HISTORICO_CONSUMO (USUARIO_ID, CARDAPIO_ID, HORARIO_CHEGADA, ENTRADA_AUTORIZADA, MOTIVO) VALUES 
-    (1, 9, '2022-12-02 18:30:01', TRUE, ""),
-    (1, 9, '2022-12-02 18:55:55', FALSE, 'Tentou entrar mais de uma vez na mesma refeição'),	
-    (1, 7, '2022-12-01 18:15:08', FALSE, 'Não agendou e tentou entrar'),
-	(1, 8, '2022-12-02 21:05:00', FALSE, 'Reservou e não compareceu')
+    (1, 9, '18:30:01', TRUE, ''),
+    (1, 9, '18:55:55', FALSE, 'Tentou entrar mais de uma vez na mesma refeição'),	
+    (1, 7, '18:15:08', FALSE, 'Não agendou e tentou entrar'),
+	(1, 8, '21:05:00', FALSE, 'Reservou e não compareceu')
 	
 -- \************************************************************\
 

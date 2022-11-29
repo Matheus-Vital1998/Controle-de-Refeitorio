@@ -93,9 +93,9 @@ public class ALN_CatracaController implements Initializable {
 
             if (horarioEscolhido != null) {
                 if (diaEscolhido != null) {
-                  cardapioEscolhido = findCardapio(horarioEscolhido, diaEscolhido);
-                  reservaAtual = findReserva(); 
-                  
+                    cardapioEscolhido = findCardapio(horarioEscolhido, diaEscolhido);
+                    reservaAtual = findReserva();
+
                 } else {
                     valid = false;
                 }
@@ -155,20 +155,23 @@ public class ALN_CatracaController implements Initializable {
 
             List<HistoricoConsumoLimitado> historicoConsumo = historicoConsumoDAO.read(LoginController.usuarioAtual, cardapioEscolhido);
 
-            for (HistoricoConsumoLimitado linha : historicoConsumo) {
-                msg += linha.getMotivo() + "\n";
+            if (historicoConsumo.size() != 0) {
+                for (HistoricoConsumoLimitado linha : historicoConsumo) {
+                    msg += linha.getMotivo() + "\n";
+                }
             }
 
             if (msg.replace("\n", "").trim() == "") {
                 msg = "";
             }
-
+            
+            histConsAtual = new HistoricoConsumo();
             histConsAtual.setCardapio(cardapioEscolhido);
             histConsAtual.setEntradaAutorizada(msg == "");
             histConsAtual.setHorarioChegada(horarioEscolhido);
             histConsAtual.setMotivo(msg);
             histConsAtual.setUsuario(LoginController.usuarioAtual);
-
+            
             return msg;
         } catch (Exception erro) {
             return "ERRO";
@@ -177,6 +180,7 @@ public class ALN_CatracaController implements Initializable {
 
     private void EntrarRefeitorio() throws Exception {
         changeVisor("Visor_Permite");
+        histConsAtual.setMotivo("Entrou");
         historicoConsumoDAO.create(histConsAtual);
         MsgBox("Sucesso", "Você entrou no refeitório.\n... Por fim, saiu do refeitório.");
     }
@@ -184,7 +188,7 @@ public class ALN_CatracaController implements Initializable {
     private void NaoEntrouRefeitorio(String strMotivo) throws Exception {
         changeVisor("Visor_Nao_Permite");
         historicoConsumoDAO.create(histConsAtual);
-        MsgBox("Sucesso", "Você não entrou no refeitório.\nMotivo: " + strMotivo);
+        MsgBox("Inválido", "Você não entrou no refeitório.\nMotivo: " + strMotivo);
     }
 
     private Integer MsgBox(String titulo, String msg) {

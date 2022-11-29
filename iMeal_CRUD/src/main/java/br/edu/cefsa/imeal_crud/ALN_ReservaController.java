@@ -90,7 +90,7 @@ public class ALN_ReservaController implements Initializable {
                     idOutraRefeicaoDoDia);
             Reserva outraReservaDoDia = reservaDAO.read(LoginController.usuarioAtual, outroCardapioDoDia);
 
-            if (outraReservaDoDia.getId() == null) {
+            if (outraReservaDoDia.getId() != null) {
                 MsgBox("Inválido", "Você só pode reservar uma das refeições do dia!");
                 App.setRoot("ViewALN_Cardapio_Semanal");
             }

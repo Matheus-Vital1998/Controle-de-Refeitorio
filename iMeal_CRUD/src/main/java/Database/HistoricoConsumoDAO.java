@@ -19,25 +19,30 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
     }
 
     @Override
-    public void create(HistoricoConsumo historicoConsumo) throws Exception {
-        String sql
-                = String.format(
-                        "INSERT INTO HISTORICO_CONSUMO (USUARIO_ID, CARDAPIO_ID, HORARIO_CHEGADA, ENTRADA_AUTORIZADA, MOTIVO) VALUES ("
-                        + "%d"
-                        + ", %d"
-                        + ", '%s'"
-                        + ", %d"
-                        + ", '%s'",
-                        historicoConsumo.getUsuario().getId(),
-                        historicoConsumo.getCardapio().getId(),
-                        historicoConsumo.getHorarioChegada(),
-                        historicoConsumo.getEntradaAutorizada(),
-                        historicoConsumo.getMotivo());
+    public void create(HistoricoConsumo historicoConsumo) {
+        try {
+            String sql
+                    = String.format(
+                            "INSERT INTO HISTORICO_CONSUMO (USUARIO_ID, CARDAPIO_ID, HORARIO_CHEGADA, ENTRADA_AUTORIZADA, MOTIVO) VALUES ("
+                            + "%d"
+                            + ", %d"
+                            + ", '%s'"
+                            + ", %s"
+                            + ", '%s')",
+                            historicoConsumo.getUsuario().getId(),
+                            historicoConsumo.getCardapio().getId(),
+                            historicoConsumo.getHorarioChegada().format(DateTimeFormatter.ISO_LOCAL_TIME),
+                            (historicoConsumo.getEntradaAutorizada() ? "TRUE" : "FALSE"),
+                            historicoConsumo.getMotivo());
 
-        Connection connection = connectionFactory.getConnection();
-        Statement statement = connection.createStatement();
-        statement.execute(sql);
-        connection.close();
+            Connection connection = connectionFactory.getConnection();
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
+            connection.close();
+
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
     }
 
     @Override
@@ -128,8 +133,8 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
     private List<HistoricoConsumoLimitado> limitedDeserialize(ResultSet result) {
 
         List<HistoricoConsumoLimitado> historicoConsumo = new LinkedList<HistoricoConsumoLimitado>();
+        Integer i = 0;
         try {
-            Integer i = 0;
             while (result.next()) {
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -148,6 +153,7 @@ public class HistoricoConsumoDAO implements DAO<HistoricoConsumo> {
                 historicoConsumo.get(i).setMotivo(result.getString("MOTIVO"));
 
                 i++;
+
             }
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
