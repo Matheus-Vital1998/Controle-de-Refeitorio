@@ -12,6 +12,7 @@ Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\br\edu\cefsa\imeal_crud\A
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\Domain\Usuario.java
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\br\edu\cefsa\imeal_crud\App.java
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\Database\HistoricoConsumoDAO.java
+Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\Domain\HistoricoConsumoLimitado.java
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\br\edu\cefsa\imeal_crud\ADM_Criar_Conta_AdminController.java
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\Database\DAO.java
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\Domain\Cardapio.java
@@ -21,6 +22,7 @@ Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\br\edu\cefsa\imeal_crud\A
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\module-info.java
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\br\edu\cefsa\imeal_crud\ADM_Relatorios_TabelasController.java
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\br\edu\cefsa\imeal_crud\ADM_Relatorios_CardsController.java
+Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\br\edu\cefsa\imeal_crud\ALN_CatracaController.java
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\br\edu\cefsa\imeal_crud\ADM_RelatoriosController.java
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\Database\CardapioDAO.java
 Z:\EC6\Controle-de-Refeitorio\iMeal_CRUD\src\main\java\Domain\HistoricoConsumo.java

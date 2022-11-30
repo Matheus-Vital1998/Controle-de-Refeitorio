@@ -74,7 +74,7 @@ CREATE TABLE HISTORICO_CONSUMO (
 	ID INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 	USUARIO_ID INT NOT NULL,
 	CARDAPIO_ID INT NOT NULL,
-	HORARIO_CHEGADA TIMESTAMP NOT NULL,
+	HORARIO_CHEGADA TIME,
 	ENTRADA_AUTORIZADA BOOLEAN NOT NULL,
 	MOTIVO VARCHAR(50)
 );
@@ -91,6 +91,8 @@ ALTER TABLE HISTORICO_CONSUMO
 			ON DELETE CASCADE
 			ON UPDATE RESTRICT;
 
+-- \************************************************************\
+
 
 INSERT INTO iMeal.USUARIO (RA,NOME,LOGIN,SENHA,TIPO) VALUES 
     ('081200024',    'ALUNO 1',    'aluno@aluno',    'aluno1234',    'ALUNO'),
@@ -99,4 +101,46 @@ INSERT INTO iMeal.USUARIO (RA,NOME,LOGIN,SENHA,TIPO) VALUES
     
 INSERT INTO iMeal.REFEICAO (NOME, HORARIO_INICIO, HORARIO_FIM, HORARIO_LIMITE_RESERVA) VALUES
     ('Janta',    '18:15',    '19:05',    '17:00'),
-    ('Lanche Refor�ado',    '20:50',    '21:05',    '19:50')
+    ('Lanche reforçado',    '20:50',    '21:05',    '19:50')
+
+INSERT INTO CARDAPIO (REFEICAO_ID, DATA, DESCRICAO) VALUES 
+	(1, '2022-11-28', 'Cozido a brasileira'),
+	(2, '2022-11-28', 'Baguete de mortadela'),
+	(1, '2022-11-29', 'Macarrao parisiense'),
+	(2, '2022-11-29', 'Roseta de queijo'),
+	(1, '2022-11-30', 'Calabresa acebolada'),
+	(2, '2022-11-30', 'Baguete de frango'),
+	(1, '2022-12-01', 'Bife grelhado'),
+	(2, '2022-12-01', 'Enroladinho de queijo'),
+	(1, '2022-12-02', 'Feijoada'),
+	(2, '2022-12-02', 'Baguete de carne louca')
+
+INSERT INTO RESERVA (USUARIO_ID, CARDAPIO_ID, HORARIO_RESERVA) VALUES 
+	(1, 9, '2022-12-02 13:03:20'),
+	(1, 8, '2022-12-01 13:03:20')
+
+INSERT INTO HISTORICO_CONSUMO (USUARIO_ID, CARDAPIO_ID, HORARIO_CHEGADA, ENTRADA_AUTORIZADA, MOTIVO) VALUES 
+    (1, 9, '18:30:01', TRUE, ''),
+    (1, 9, '18:55:55', FALSE, 'Tentou entrar mais de uma vez na mesma refeição'),	
+    (1, 7, '18:15:08', FALSE, 'Não agendou e tentou entrar'),
+	(1, 8, '21:05:00', FALSE, 'Reservou e não compareceu')
+	
+-- \************************************************************\
+
+CREATE VIEW vw_Compareceram AS
+	SELECT * FROM HISTORICO_CONSUMO WHERE ENTRADA_AUTORIZADA = TRUE
+
+CREATE VIEW vw_NaoCompareceram AS
+	SELECT * FROM HISTORICO_CONSUMO WHERE MOTIVO = 'Reservou e não compareceu'
+
+CREATE VIEW vw_TentouEntrarSemAgendar AS
+	SELECT * FROM HISTORICO_CONSUMO WHERE MOTIVO = 'Não agendou e tentou entrar'
+
+CREATE VIEW vw_TentouEntrarDenovo AS
+	SELECT * FROM HISTORICO_CONSUMO WHERE MOTIVO = 'Tentou entrar mais de uma vez na mesma refeição'
+
+
+
+
+	
+

@@ -40,6 +40,7 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
+                  <Label layoutX="35.0" layoutY="144.0" text="Escolha a data referente do relatório " />
                </children></AnchorPane>
         </items>
       </SplitPane>

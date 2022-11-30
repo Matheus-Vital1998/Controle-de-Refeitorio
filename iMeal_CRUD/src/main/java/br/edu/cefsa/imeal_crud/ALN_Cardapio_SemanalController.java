@@ -4,12 +4,17 @@
  */
 package br.edu.cefsa.imeal_crud;
 
+import Database.CardapioDAO;
 import Database.RefeicaoDAO;
+import Database.ReservaDAO;
+import Domain.Cardapio;
 import Domain.Refeicao;
+import Domain.Reserva;
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -32,6 +37,11 @@ public class ALN_Cardapio_SemanalController implements Initializable {
 
     private static LocalDate[] diasDaSemana;
     private static RefeicaoDAO refeicaoDAO;
+    private static Cardapio cardapioEscolhido;
+    private static Reserva reservaAtual;
+    private static Boolean reservaFeita;
+    private CardapioDAO cardapioDAO = new CardapioDAO();
+    private ReservaDAO reservaDAO = new ReservaDAO();
 
     @FXML
     Label lblDiaSegunda;
@@ -49,7 +59,7 @@ public class ALN_Cardapio_SemanalController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        refeicaoDAO = new RefeicaoDAO();
         dataEscolhida = LocalDate.now();
         diasDaSemana = getDiasDaSemana(dataEscolhida);
 
@@ -60,7 +70,7 @@ public class ALN_Cardapio_SemanalController implements Initializable {
         lblDiaSexta.setText(diasDaSemana[4].format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
-private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
+    private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
         //0 - Seg, 1 - Ter, ..., 6 - Dom
         Integer diaDaSemanaAtual = DayOfWeek.from(dataAtual).getValue() - 1;
 
@@ -73,8 +83,8 @@ private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
             diasDaSemana[0] = dataAtual.minusDays(diaDaSemanaAtual + 7);
             diaDaSemanaAtual = DayOfWeek.from(dataAtual).getValue() - 1;
         }
-        
-        for(int i = 1; i<7; i++){     
+
+        for (int i = 1; i < 7; i++) {
             diasDaSemana[i] = diasDaSemana[0].plusDays(i);
         }
 
@@ -84,6 +94,11 @@ private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
     @FXML
     private void OnClick_btnVoltar() throws IOException {
         App.setRoot("ViewLogin");
+    }
+
+    @FXML
+    private void OnClick_btnCatraca() throws IOException {
+        App.setRoot("ViewALN_Catraca");
     }
 
     private void MsgErro(String msg) {
@@ -96,7 +111,21 @@ private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
         }
     }
 
-    private void RefeicaoEscolhida(String nome_refeicao, String dia_da_semana) {
+    private Integer MsgBox(String titulo, String msg) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(msg);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            alert.close();
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    private Boolean RefeicaoEscolhida(String nome_refeicao, String dia_da_semana) {
+        Boolean valid = true;
         try {
             //Refeição
             if (nome_refeicao == "Janta") {
@@ -105,6 +134,7 @@ private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
                 refeicaoEscolhida = refeicaoDAO.read("Lanche reforçado");
             } else {
                 MsgErro("Ocorreu algo de errado. Tente reiniciar o programa.");
+                valid = false;
             }
 
             //Dia
@@ -125,70 +155,130 @@ private LocalDate[] getDiasDaSemana(LocalDate dataAtual) {
                 dataEscolhida = diasDaSemana[4];
             } else {
                 MsgErro("Ocorreu algo de errado. Tente reiniciar o programa.");
+                valid = false;
+            }
+
+            if (dataEscolhida.isBefore(LocalDate.now())) {
+                MsgBox("Inválido", "A refeição já ocorreu.");
+                valid = false;
+            } else if (dataEscolhida.isEqual(LocalDate.now())) {
+                if (refeicaoEscolhida.getHorarioLimiteReserva().isBefore(LocalTime.now())) {
+                    MsgBox("Inválido", "Horário limite de reserva da refeição excedido!\nHorário limite: "
+                            + refeicaoEscolhida.getHorarioLimiteReserva());
+                    valid = false;
+                }
+            }
+
+            if (!UnicaReserva()) {
+                MsgBox("Inválido", "Você só pode reservar uma das refeições do dia!");
+                valid = false;
             }
         } catch (Exception erro) {
-            MsgErro("Ocorreu algo de errado. Tente reiniciar o programa.");
+            valid = false;
+        }
+        return valid;
+    }
+
+    private Boolean UnicaReserva() {
+        try {
+            cardapioEscolhido = new Cardapio();
+            Integer idRefeicao = ALN_Cardapio_SemanalController.refeicaoEscolhida.getId();
+
+            cardapioEscolhido = cardapioDAO.read(ALN_Cardapio_SemanalController.dataEscolhida,
+                    idRefeicao);
+            reservaAtual = reservaDAO.read(LoginController.usuarioAtual, cardapioEscolhido);
+
+            //Verifica se a outra refeição do dia não está reservada, se sim, nega a entrada
+            Integer idOutraRefeicaoDoDia = 0;
+            if (idRefeicao == 1) {
+                idOutraRefeicaoDoDia = 2;
+            } else if (idRefeicao == 2) {
+                idOutraRefeicaoDoDia = 1;
+            } else {
+                //?????
+            }
+
+            Cardapio outroCardapioDoDia = cardapioDAO.read(ALN_Cardapio_SemanalController.dataEscolhida,
+                    idOutraRefeicaoDoDia);
+            Reserva outraReservaDoDia = reservaDAO.read(LoginController.usuarioAtual, outroCardapioDoDia);
+
+            if (outraReservaDoDia.getId() != null) {
+                return false;
+            }
+            return true;
+        } catch (Exception erro) {
+            return false;
         }
     }
 
     //Vai para a tela de reserva, levando o valor de janta consigo
     @FXML
     private void OnClick_Seg_Janta() throws IOException {
-        RefeicaoEscolhida("Janta", "Segunda");
-        App.setRoot("ViewALN_Reserva");
+        if (RefeicaoEscolhida("Janta", "Segunda")) {
+            App.setRoot("ViewALN_Reserva");
+        }
     }
 
     @FXML
     private void OnClick_Ter_Janta() throws IOException {
-        RefeicaoEscolhida("Janta", "Terça");
-        App.setRoot("ViewALN_Reserva");
+        if (RefeicaoEscolhida("Janta", "Terça")) {
+            App.setRoot("ViewALN_Reserva");
+        }
     }
 
     @FXML
     private void OnClick_Qua_Janta() throws IOException {
-        RefeicaoEscolhida("Janta", "Quarta");
-        App.setRoot("ViewALN_Reserva");
+        if (RefeicaoEscolhida("Janta", "Quarta")) {
+            App.setRoot("ViewALN_Reserva");
+        }
     }
 
     @FXML
     private void OnClick_Qui_Janta() throws IOException {
-        RefeicaoEscolhida("Janta", "Quinta");
-        App.setRoot("ViewALN_Reserva");
+        if (RefeicaoEscolhida("Janta", "Quinta")) {
+            App.setRoot("ViewALN_Reserva");
+        }
     }
 
     @FXML
     private void OnClick_Sex_Janta() throws IOException {
-        RefeicaoEscolhida("Janta", "Sexta");
-        App.setRoot("ViewALN_Reserva");
+        if (RefeicaoEscolhida("Janta", "Sexta")) {
+            App.setRoot("ViewALN_Reserva");
+        }
     }
 
     @FXML
     private void OnClick_Seg_Lanche_Reforcado() throws IOException {
-        RefeicaoEscolhida("Lanche reforçado", "Segunda");
-        App.setRoot("ViewALN_Reserva");
+        if (RefeicaoEscolhida("Lanche reforçado", "Segunda")) {
+            App.setRoot("ViewALN_Reserva");
+        }
     }
 
     @FXML
     private void OnClick_Ter_Lanche_Reforcado() throws IOException {
-        RefeicaoEscolhida("Lanche reforçado", "Terça");
-        App.setRoot("ViewALN_Reserva");
+        if (RefeicaoEscolhida("Lanche reforçado", "Terça")) {
+            App.setRoot("ViewALN_Reserva");
+        }
     }
 
     @FXML
     private void OnClick_Qua_Lanche_Reforcado() throws IOException {
-        RefeicaoEscolhida("Lanche reforçado", "Quarta");
-        App.setRoot("ViewALN_Reserva");
+        if (RefeicaoEscolhida("Lanche reforçado", "Quarta")) {
+            App.setRoot("ViewALN_Reserva");
+        }
     }
 
     @FXML
     private void OnClick_Qui_Lanche_Reforcado() throws IOException {
-        RefeicaoEscolhida("Lanche reforçado", "Quinta");
-        App.setRoot("ViewALN_Reserva");
+        if (RefeicaoEscolhida("Lanche reforçado", "Quinta")) {
+            App.setRoot("ViewALN_Reserva");
+        }
     }
 
     @FXML
     private void OnClick_Sex_Lanche_Reforcado() throws IOException {
-        RefeicaoEscolhida("Lanche reforçado", "Sexta");
-        App.setRoot("ViewALN_Reserva");
+        if (RefeicaoEscolhida("Lanche reforçado", "Sexta")) {
+            App.setRoot("ViewALN_Reserva");
+        }
     }
 }

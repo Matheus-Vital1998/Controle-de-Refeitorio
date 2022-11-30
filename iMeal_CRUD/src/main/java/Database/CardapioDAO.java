@@ -18,27 +18,31 @@ public class CardapioDAO implements DAO<Cardapio> {
         Connection connection = null;
         Statement statement = null;
 
-        String sql =
-            String.format(
-                "INSERT INTO CARDAPIO (REFEICAO_ID, DATA, DESCRICAO) VALUES ("
-                + "%d"
-                + ", '%s'"
-                + ", '%s')"
-                , cardapio.refeicaoID
-                , cardapio.data
-                , cardapio.descricao);
-        
+        String sql
+                = String.format(
+                        "INSERT INTO CARDAPIO (REFEICAO_ID, DATA, DESCRICAO) VALUES ("
+                        + "%d"
+                        + ", '%s'"
+                        + ", '%s')",
+                         cardapio.getRefeicao().getId(),
+                         cardapio.getData(),
+                         cardapio.getDescricao());
+
         try {
             connection = instance.getConnection();
             statement = connection.createStatement();
             statement.execute(sql);
-        }
-        catch (Exception exception){
+        } catch (Exception exception) {
             System.out.println(exception.getMessage());
-        }
-        finally {
-            try { statement.close(); } catch (Exception exception) {/* Ignored */}
-            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception exception) {/* Ignored */
+            }
+            try {
+                connection.close();
+            } catch (Exception exception) {/* Ignored */
+            }
         }
     }
 
@@ -48,48 +52,86 @@ public class CardapioDAO implements DAO<Cardapio> {
         Statement statement = null;
         ResultSet result = null;
         Cardapio cardapio = null;
-        
+
         String sql = "SELECT * FROM CARDAPIO WHERE ID = " + id;
-        
+
         try {
             connection = instance.getConnection();
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
             cardapio = deserialize(result);
-        }
-        catch (Exception exception){
+        } catch (Exception exception) {
             System.out.println(exception.getMessage());
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception exception) {/* Ignored */
+            }
+            try {
+                connection.close();
+            } catch (Exception exception) {/* Ignored */
+            }
         }
-        finally {
-            try { statement.close(); } catch (Exception exception) {/* Ignored */}
-            try { connection.close(); } catch (Exception exception) {/* Ignored */}
-        }
-        
+
         return cardapio;
     }
+
     public Cardapio read(LocalDate data, Integer idRefeicao) {
         Connection connection = null;
         Statement statement = null;
         ResultSet result = null;
         Cardapio cardapio = null;
-        
-        String sql = "SELECT * FROM CARDAPIO WHERE REFEICAO_ID = " 
+
+        String sql = "SELECT * FROM CARDAPIO WHERE REFEICAO_ID = "
                 + idRefeicao + " And DATA = '" + data + "'";
-        
+
         try {
             connection = instance.getConnection();
             statement = connection.createStatement();
             result = statement.executeQuery(sql);
             cardapio = deserialize(result);
-        }
-        catch (Exception exception){
+        } catch (Exception exception) {
             System.out.println(exception.getMessage());
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception exception) {/* Ignored */
+            }
+            try {
+                connection.close();
+            } catch (Exception exception) {/* Ignored */
+            }
         }
-        finally {
-            try { statement.close(); } catch (Exception exception) {/* Ignored */}
-            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+
+        return cardapio;
+    }
+
+    public Cardapio read(LocalDate data) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        Cardapio cardapio = null;
+
+        String sql = "SELECT * FROM CARDAPIO WHERE DATA = '" + data + "'";
+
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            cardapio = deserialize(result);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception exception) {/* Ignored */
+            }
+            try {
+                connection.close();
+            } catch (Exception exception) {/* Ignored */
+            }
         }
-        
+
         return cardapio;
     }
 
@@ -98,29 +140,33 @@ public class CardapioDAO implements DAO<Cardapio> {
         Connection connection = null;
         Statement statement = null;
 
-        String sql =
-            String.format(
-                "UPDATE CARDAPIO SET "
-                + "REFEICAO_ID = %d"
-                + ", DATA = \'%s\'"
-                + ", DESCRICAO = \'%s\'"
-                + " WHERE ID = %d"
-                , cardapio.refeicaoID
-                , cardapio.data
-                , cardapio.descricao
-                , cardapio.id);
-        
+        String sql
+                = String.format(
+                        "UPDATE CARDAPIO SET "
+                        + "REFEICAO_ID = %d"
+                        + ", DATA = \'%s\'"
+                        + ", DESCRICAO = \'%s\'"
+                        + " WHERE ID = %d",
+                         cardapio.getRefeicao().getId(),
+                         cardapio.getData(),
+                         cardapio.getDescricao(),
+                         cardapio.getId());
+
         try {
             connection = instance.getConnection();
             statement = connection.createStatement();
             statement.execute(sql);
-        }
-        catch (Exception exception){
+        } catch (Exception exception) {
             System.out.println(exception.getMessage());
-        }
-        finally {
-            try { statement.close(); } catch (Exception exception) {/* Ignored */}
-            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception exception) {/* Ignored */
+            }
+            try {
+                connection.close();
+            } catch (Exception exception) {/* Ignored */
+            }
         }
     }
 
@@ -130,37 +176,42 @@ public class CardapioDAO implements DAO<Cardapio> {
         Statement statement = null;
 
         String sql = "DELETE FROM CARDAPIO WHERE ID = " + id;
-        
+
         try {
             connection = instance.getConnection();
             statement = connection.createStatement();
             statement.execute(sql);
-        }
-        catch (Exception exception){
+        } catch (Exception exception) {
             System.out.println(exception.getMessage());
-        }
-        finally {
-            try { statement.close(); } catch (Exception exception) {/* Ignored */}
-            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        } finally {
+            try {
+                statement.close();
+            } catch (Exception exception) {/* Ignored */
+            }
+            try {
+                connection.close();
+            } catch (Exception exception) {/* Ignored */
+            }
         }
     }
 
-    private Cardapio deserialize(ResultSet result){
+    private Cardapio deserialize(ResultSet result) {
         Cardapio cardapio = new Cardapio();
         try {
             while (result.next()) {
-                cardapio.id = result.getInt("ID");
-                cardapio.refeicaoID = result.getInt("REFEICAO_ID");
-                cardapio.data = LocalDate.parse(result.getString("DATA"));
-                cardapio.descricao = result.getString("DESCRICAO");
+                cardapio.setId(result.getInt("ID"));
+
+                RefeicaoDAO refeicaoDAO = new RefeicaoDAO();
+                cardapio.setRefeicao(refeicaoDAO.read(result.getInt("REFEICAO_ID")));
+
+                cardapio.setData(LocalDate.parse(result.getString("DATA")));
+                cardapio.setDescricao(result.getString("DESCRICAO"));
             }
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
 
         return cardapio;
-    }    
-    
-    
+    }
+
 }

@@ -52,9 +52,9 @@ public class LoginController implements Initializable {
         }
         
         //Verificar se é usuário ADMIN ou ALUNO        
-        if (usuarioAtual.tipo == TipoUsuario.ADMIN){
+        if (usuarioAtual.getTipo() == TipoUsuario.ADMIN){
             App.setRoot("ViewADM_Inicial");
-        } else if (usuarioAtual.tipo == TipoUsuario.ALUNO){
+        } else if (usuarioAtual.getTipo() == TipoUsuario.ALUNO){
             App.setRoot("ViewALN_Cardapio_Semanal");
         } else{
             lblValidacao.setText("Algo errado ocorreu ... reinicie o programa.");

@@ -60,6 +60,7 @@
                   <Button layoutX="459.0" layoutY="271.0" mnemonicParsing="false" onAction="#OnClick_Qui_Janta" prefHeight="25.0" prefWidth="108.0" text="Janta" />
                   <Button layoutX="459.0" layoutY="306.0" mnemonicParsing="false" onAction="#OnClick_Qui_Lanche_Reforcado" text="Lanche reforçado" />
                   <Label layoutX="481.0" layoutY="132.0" text="Quinta-feira" />
+                  <Button fx:id="btnCatraca" layoutX="658.0" layoutY="410.0" mnemonicParsing="false" onAction="#OnClick_btnCatraca" text="Simulador de catraca" />
                </children></AnchorPane>
         </items>
       </SplitPane>

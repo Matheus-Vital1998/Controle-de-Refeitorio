@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
@@ -28,13 +29,13 @@
                <children>
                   <Pane layoutX="632.0" prefHeight="434.0" prefWidth="161.0" style="-fx-border-color: black;">
                      <children>
-                        <Label fx:id="lblDia" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="161.0" style="-fx-border-color: black;" text="XX/XX/XXXX" textAlignment="CENTER" />
-                        <Button disable="true" layoutX="27.0" layoutY="86.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Café-da-manhã" />
-                        <Button disable="true" layoutX="27.0" layoutY="121.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Almoço" />
-                        <Button disable="true" layoutX="27.0" layoutY="156.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Lanche" />
-                        <Button layoutX="27.0" layoutY="192.0" mnemonicParsing="false" onAction="#OnClick_btnJanta" prefHeight="25.0" prefWidth="108.0" text="Janta" />
-                        <Button layoutX="27.0" layoutY="227.0" mnemonicParsing="false" onAction="#OnClick_btnLanche_Reforcado" text="Lanche reforçado" />
+                        <Label fx:id="lblDia" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="161.0" style="-fx-border-color: black;" text="XX/XX/XXXX" textAlignment="CENTER" wrapText="true" />
                         <Pane layoutY="300.0" prefHeight="134.0" prefWidth="161.0" style="-fx-border-color: black;" />
+                        <CheckBox fx:id="cbLancheReforcado" layoutX="23.0" layoutY="231.0" mnemonicParsing="false" onAction="#OnChange_FiltroRefeicao" selected="true" text="Lanche Reforçado" />
+                        <CheckBox fx:id="cbJanta" layoutX="56.0" layoutY="196.0" mnemonicParsing="false" onAction="#OnChange_FiltroRefeicao" selected="true" text="Janta" />
+                        <CheckBox disable="true" layoutX="51.0" layoutY="160.0" mnemonicParsing="false" text="Lanche" />
+                        <CheckBox disable="true" layoutX="49.0" layoutY="125.0" mnemonicParsing="false" text="Almoço" />
+                        <CheckBox disable="true" layoutX="28.0" layoutY="90.0" mnemonicParsing="false" text="Café-da-manhã" />
                      </children>
                   </Pane>
                   <Pane layoutX="7.0" prefHeight="434.0" prefWidth="624.0">

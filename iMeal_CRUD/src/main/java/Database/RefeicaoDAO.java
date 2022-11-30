@@ -24,10 +24,10 @@ public class RefeicaoDAO implements DAO<Refeicao>{
                 + ", \'%s\'"
                 + ", \'%s\'"
                 + ", \'%s\');"
-                , refeicao.nome
-                , refeicao.horarioInicio
-                , refeicao.horarioFim
-                , refeicao.horarioLimiteReserva);
+                , refeicao.getNome()
+                , refeicao.getHorarioInicio()
+                , refeicao.getHorarioFim()
+                , refeicao.getHorarioLimiteReserva());
         
         try {
             connection = instance.getConnection();
@@ -98,6 +98,34 @@ public class RefeicaoDAO implements DAO<Refeicao>{
         return refeicao;
     }
 
+    public Refeicao read(LocalTime horario) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet result = null;
+        Refeicao refeicao = null;
+
+        String sql =
+            "SELECT * FROM REFEICAO WHERE HORARIO_INICIO < '" + horario + 
+                "' And HORARIO_FIM > '" + horario + "'";
+
+        try {
+            connection = instance.getConnection();
+            statement = connection.createStatement();
+            result = statement.executeQuery(sql);
+            refeicao = deserialize(result);
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+        finally {
+            try { result.close(); } catch (Exception exception) {/* Ignored */}
+            try { statement.close(); } catch (Exception exception) {/* Ignored */}
+            try { connection.close(); } catch (Exception exception) {/* Ignored */}
+        }
+
+        return refeicao;
+    }
+    
     @Override
     public void update(Refeicao refeicao) {
         Connection connection = null;
@@ -111,11 +139,10 @@ public class RefeicaoDAO implements DAO<Refeicao>{
                 + ", HORARIO_FIM = \'%s\'"
                 + ", HORARIO_LIMITE_RESERVA = \'%s\'"
                 + "WHERE ID = %d"
-                , refeicao.nome
-                , refeicao.horarioInicio
-                , refeicao.horarioFim
-                , refeicao.horarioLimiteReserva
-                , refeicao.id);
+                , refeicao.getNome()
+                , refeicao.getHorarioInicio()
+                , refeicao.getHorarioFim()
+                , refeicao.getHorarioLimiteReserva());
 
         try {
             connection = instance.getConnection();
@@ -158,11 +185,11 @@ public class RefeicaoDAO implements DAO<Refeicao>{
         Refeicao refeicao = new Refeicao();
         try {
             while (result.next()) {
-                refeicao.id = result.getInt("ID");
-                refeicao.nome = result.getString("NOME");
-                refeicao.horarioInicio = LocalTime.parse(result.getString("HORARIO_INICIO"));
-                refeicao.horarioFim = LocalTime.parse(result.getString("HORARIO_FIM"));
-                refeicao.horarioLimiteReserva = LocalTime.parse(result.getString("HORARIO_LIMITE_RESERVA"));
+                refeicao.setId(result.getInt("ID"));
+                refeicao.setNome(result.getString("NOME"));
+                refeicao.setHorarioInicio(LocalTime.parse(result.getString("HORARIO_INICIO")));
+                refeicao.setHorarioFim(LocalTime.parse(result.getString("HORARIO_FIM")));
+                refeicao.setHorarioLimiteReserva(LocalTime.parse(result.getString("HORARIO_LIMITE_RESERVA")));
             }
         }
         catch (Exception exception) {
